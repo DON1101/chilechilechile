@@ -1,5 +1,8 @@
 {% include "base.html" %}
 
 {% block content %}
-    并非关于吃的一切
+    <div>并非关于吃的一切</div>
+    {% for article in articles %}
+        <p>{{ article.title }}</p>
+    {% end %}
 {% end %}
