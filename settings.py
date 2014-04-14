@@ -48,6 +48,20 @@ SESSION_COOKIE_SECURE = False
 SESSION_COOKIE_HTTPONLY = True
 COOKIE_SECRET = "your-cookie-secret"
 
+####################
+# DATABASE RELATED #
+####################
+
+DATABASE_SERVER = "localhost"
+DATABASE_USER = "root"
+DATABASE_PASSWORD = "MS@don1988"
+DATABASE_NAME = "chilechilechile"
+
+##################
+# WEIXIN RELATED #
+##################
+WEIXIN_TOKEN = "echo_don"
+
 ##########################
 # LOCAL SETTINGS RELATED #
 ##########################
