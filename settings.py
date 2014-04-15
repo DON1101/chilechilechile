@@ -77,7 +77,7 @@ TEMPLATE_ROOT = path(ROOT, 'templates')
 settings = {}
 settings['debug'] = DEBUG
 settings['static_path'] = MEDIA_ROOT
-settings['xsrf_cookies'] = True
+settings['xsrf_cookies'] = False
 settings['template_loader'] = tornado.template.Loader(TEMPLATE_ROOT)
 
 SYSLOG_TAG = "chilechilechile"

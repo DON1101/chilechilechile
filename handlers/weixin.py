@@ -37,10 +37,10 @@ class WeixinHandler(RequestHandler):
         fromUser = xml.find("FromUserName").text
         toUser = xml.find("ToUserName").text
         template = "weixin_reply/reply_text.xml"
-        kwargs = dict(fromUser,
-                      toUser,
-                      int(time.time()),
-                      content
+        kwargs = dict(fromUser=fromUser,
+                      toUser=toUser,
+                      createTime=int(time.time()),
+                      content=content
                       )
         self.set_header('Content-Type', 'text/xml')
         return self.render(
