@@ -1,7 +1,6 @@
 from tornado.web import RequestHandler
 from lxml import etree
 import settings
-import web
 import hashlib
 import time
 import logging
@@ -30,20 +29,26 @@ class WeixinHandler(RequestHandler):
             self.flush()
 
     def post(self):
-        str_xml = web.data()  # Get Post data
+        str_xml = self.request.body  # Get Post data
         xml = etree.fromstring(str_xml)  # xml parsing
         content = xml.find("Content").text
         msgType = xml.find("MsgType").text
         fromUser = xml.find("FromUserName").text
         toUser = xml.find("ToUserName").text
-        template = "weixin_reply/reply_text.xml"
-        kwargs = dict(fromUser=fromUser,
-                      toUser=toUser,
-                      createTime=int(time.time()),
-                      content=content
-                      )
-        self.set_header('Content-Type', 'text/xml')
-        return self.render(
-            template,
-            **kwargs
-        )
+
+        textTpl = "<xml>\n\
+                    <ToUserName><![CDATA[%s]]></ToUserName>\n\
+                    <FromUserName><![CDATA[%s]]></FromUserName>\n\
+                    <CreateTime>%s</CreateTime>\n\
+                    <MsgType><![CDATA[%s]]></MsgType>\n\
+                    <Content><![CDATA[%s]]></Content>\n\
+                    <FuncFlag>0</FuncFlag>\n\
+                   </xml>"
+        response = textTpl % (fromUser,
+                              toUser,
+                              int(time.time()),
+                              "text",
+                              content
+                              )
+        self.write(response)
+        self.flush()
