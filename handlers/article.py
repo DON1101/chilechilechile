@@ -15,7 +15,7 @@ class ArticleListHandler(RequestHandler):
         day = self.get_argument("day", "")
         articles = db.query("SELECT * FROM articles")
         kwargs = dict(articles=articles)
-        super(HelloWorldHandler, self).render(
+        super(ArticleListHandler, self).render(
             template_name,
             **kwargs
         )
