@@ -11,11 +11,11 @@ logger = logging.getLogger("transformers." + __name__)
 class WeixinHandler(RequestHandler):
     def get(self):
         # Get input parameters
-        data = web.input()
-        signature = data.signature
-        timestamp = data.timestamp
-        nonce = data.nonce
-        echostr = data.echostr
+        # data = web.input()
+        signature = self.get_argument("signature", "")
+        timestamp = self.get_argument("timestamp", "")
+        nonce = self.get_argument("nonce", "")
+        echostr = self.get_argument("echostr", "")
         # My weixin token
         token = settings.WEIXIN_TOKEN
         # Sort in dictionary order
