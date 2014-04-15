@@ -11,7 +11,6 @@ logger = logging.getLogger("transformers." + __name__)
 class WeixinHandler(RequestHandler):
     def get(self):
         # Get input parameters
-        # data = web.input()
         signature = self.get_argument("signature", "")
         timestamp = self.get_argument("timestamp", "")
         nonce = self.get_argument("nonce", "")
@@ -27,7 +26,8 @@ class WeixinHandler(RequestHandler):
 
         # If it's a request from weixin, respond echostr
         if hashcode == signature:
-            return echostr
+            self.write(echostr)
+            self.flush()
 
     def post(self):
         str_xml = web.data()  # Get Post data
@@ -36,9 +36,14 @@ class WeixinHandler(RequestHandler):
         msgType = xml.find("MsgType").text
         fromUser = xml.find("FromUserName").text
         toUser = xml.find("ToUserName").text
-        return self.render.reply_text(
-            fromUser,
-            toUser,
-            int(time.time()),
-            content
+        template = "weixin_reply/reply_text.xml"
+        kwargs = dict(fromUser,
+                      toUser,
+                      int(time.time()),
+                      content
+                      )
+        self.set_header('Content-Type', 'text/xml')
+        return self.render(
+            template,
+            **kwargs
         )
