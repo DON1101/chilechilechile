@@ -73,6 +73,7 @@ except ImportError:
 
 MEDIA_ROOT = path(ROOT, 'media')
 TEMPLATE_ROOT = path(ROOT, 'templates')
+STATIC_URL = '/static'
 
 settings = {}
 settings['debug'] = DEBUG
