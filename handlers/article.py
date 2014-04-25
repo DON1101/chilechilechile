@@ -1,3 +1,4 @@
+import math
 from torndb import Connection
 from tornado.web import RequestHandler
 import settings
@@ -11,17 +12,26 @@ class ArticleListHandler(RequestHandler):
         day = self.get_argument("day", "Mon")
         cur_page = self.get_argument("page", "0")
         num_per_page = 5
-        sql = """SELECT * FROM articles WHERE day='{0}' ORDER BY time DESC
-                 LIMIT {1}, {2}
-              """.format(day, int(cur_page) * num_per_page, num_per_page)
 
         db = Connection(settings.DATABASE_SERVER,
                         settings.DATABASE_NAME,
                         settings.DATABASE_USER,
                         settings.DATABASE_PASSWORD,
                         )
+
+        sql = "SELECT COUNT(*) FROM articles WHERE day='{0}';".format(day)
+        count = db.query(sql)["COUNT(*)"]
+        max_page = math.ceil((count + 0.0) / num_per_page)
+
+        sql = """SELECT * FROM articles WHERE day='{0}' ORDER BY time DESC
+                 LIMIT {1}, {2}
+              """.format(day, int(cur_page) * num_per_page, num_per_page)
         articles = db.query(sql)
-        kwargs = dict(articles=articles)
+        kwargs = dict(articles=articles,
+                      day=day,
+                      cur_page=cur_page,
+                      max_page=max_page)
+
         super(ArticleListHandler, self).render(
             template_name,
             **kwargs

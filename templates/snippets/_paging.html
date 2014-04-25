@@ -1,0 +1,6 @@
+<div class="paging">第 
+    {% for page in range(max_page) %}
+    <a href="?filter={{ filter }}&day={{ day }}&page={{ page + 1 }}" {% if cur_page == page + 1 %}class="curPage"{% end %}>{{ page + 1 }}</a> |
+    {% end %}
+     页
+</div>

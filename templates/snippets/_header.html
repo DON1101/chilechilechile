@@ -15,15 +15,10 @@
         <div class="navi_item day5 {% if day == "Fri" %}cur-day{% end %}">
             <a href="/articles/?day=Fri&page=1">星期五<br/>话题探讨</a>
         </div>            
-        <div class="navi_item all {% if filter == "all" %}cur-day{% end %}">
-            <a href="/articles/?filter=all&page=1">最新<br/>文章</a>
+        <div class="navi_item all {% if day == "all" %}cur-day{% end %}">
+            <a href="/articles/?day=all&page=1">最新<br/>文章</a>
         </div>
     </div>
     <div style="clear: both;"></div>
-    <div class="paging">第 
-        {% for page in range(max_page) %}
-        <a href="?filter={{ filter }}&day={{ day }}&page={{ page + 1 }}" {% if cur_page == page + 1 %}class="curPage"{% end %}>{{ page + 1 }}</a> |
-        {% end %}
-         页
-    </div>
+    {% include "_paging.html" %}
 </div>
