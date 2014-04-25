@@ -1,0 +1,29 @@
+<div class="tgj_header">
+    <div class="navi">
+        <div class="navi_item day1 {% if day == "Mon" %}cur-day{% end %}">
+            <a href="/articles/?day=Mon&page=1">星期一<br/>旅行食记</a>
+        </div>
+        <div class="navi_item day2 {% if day == "Tue" %}cur-day{% end %}">
+            <a href="/articles/?day=Tue&page=1">星期二<br/>精神食粮</a>
+        </div>
+        <div class="navi_item day3 {% if day == "Wed" %}cur-day{% end %}">
+            <a href="/articles/?day=Wed&page=1">星期三<br/>吃情男女</a>
+        </div>
+        <div class="navi_item day4 {% if day == "Thu" %}cur-day{% end %}">
+            <a href="/articles/?day=Thu&page=1">星期四<br/>私房推荐</a>
+        </div>
+        <div class="navi_item day5 {% if day == "Fri" %}cur-day{% end %}">
+            <a href="/articles/?day=Fri&page=1">星期五<br/>话题探讨</a>
+        </div>            
+        <div class="navi_item all {% if filter == "all" %}cur-day{% end %}">
+            <a href="/articles/?filter=all&page=1">最新<br/>文章</a>
+        </div>
+    </div>
+    <div style="clear: both;"></div>
+    <div class="paging">第 
+        {% for page in range(max_page) %}
+        <a href="?filter={{ filter }}&day={{ day }}&page={{ page + 1 }}" {% if cur_page == page + 1 %}class="curPage"{% end %}>{{ page + 1 }}</a> |
+        {% end %}
+         页
+    </div>
+</div>

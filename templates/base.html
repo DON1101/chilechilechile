@@ -9,6 +9,14 @@
     {% end %}
 
     <body>
+        {% block header %}
+            {% include "snippets/_header.html" %}
+        {% end %}
+
         {% block content %}{% end %}
+
+        {% block footer %}
+            {% include "snippets/_footer.html" %}
+        {% end %}
     </body>
 </html>
