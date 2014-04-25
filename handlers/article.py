@@ -20,8 +20,8 @@ class ArticleListHandler(RequestHandler):
                         )
 
         sql = "SELECT COUNT(*) FROM articles WHERE day='{0}';".format(day)
-        count = db.query(sql)["COUNT(*)"]
-        max_page = math.ceil((count + 0.0) / num_per_page)
+        count = db.query(sql)[0]["COUNT(*)"]
+        max_page = int(math.ceil((count + 0.0) / num_per_page))
 
         sql = """SELECT * FROM articles WHERE day='{0}' ORDER BY time DESC
                  LIMIT {1}, {2}
