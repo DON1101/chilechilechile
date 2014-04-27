@@ -61,7 +61,8 @@ class ArticleDetailsHandler(RequestHandler):
         article_content_html = response.body
 
         kwargs = dict(article=article,
-                      article_content_html=article_content_html)
+                      article_content_html=article_content_html,
+                      day="")
 
         super(ArticleDetailsHandler, self).render(
             template_name,
