@@ -1,5 +1,6 @@
 import math
 from torndb import Connection
+from tornado import gen
 from tornado.web import RequestHandler
 from tornado.httpclient import AsyncHTTPClient
 import settings
@@ -40,6 +41,7 @@ class ArticleListHandler(RequestHandler):
 
 
 class ArticleDetailsHandler(RequestHandler):
+    @gen.coroutine
     def get(self):
         template_name = "article_details.html"
         article_id = self.get_argument("id", "")
