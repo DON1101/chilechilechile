@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
-        <title>并非关于吃的一切</title>
+        <title>{% block title %}并非关于吃的一切{% end %}</title>
     </head>
     {% block head_style_sheets %}
         {% include "snippets/_stylesheets.html" %}

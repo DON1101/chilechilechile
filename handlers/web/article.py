@@ -1,6 +1,7 @@
 import math
 from torndb import Connection
 from tornado.web import RequestHandler
+from tornado.httpclient import AsyncHTTPClient
 import settings
 import logging
 logger = logging.getLogger("chilechilechile." + __name__)
@@ -33,6 +34,34 @@ class ArticleListHandler(RequestHandler):
                       max_page=max_page)
 
         super(ArticleListHandler, self).render(
+            template_name,
+            **kwargs
+        )
+
+
+class ArticleDetailsHandler(RequestHandler):
+    def get(self):
+        template_name = "article_details.html"
+        article_id = self.get_argument("id", "")
+
+        db = Connection(settings.DATABASE_SERVER,
+                        settings.DATABASE_NAME,
+                        settings.DATABASE_USER,
+                        settings.DATABASE_PASSWORD,
+                        )
+
+        sql = "SELECT title, url FROM articles WHERE id='{0}'".format(
+            article_id)
+        article = db.query(sql)[0]
+
+        http_client = AsyncHTTPClient()
+        response = yield http_client.fetch(article["url"])
+        article_content_html = response.body
+
+        kwargs = dict(article=article,
+                      article_content_html=article_content_html)
+
+        super(ArticleDetailsHandler, self).render(
             template_name,
             **kwargs
         )

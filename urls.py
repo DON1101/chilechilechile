@@ -1,5 +1,5 @@
 from tornado.web import RedirectHandler, StaticFileHandler
-from handlers.article import ArticleListHandler
+from handlers.web import ArticleListHandler, ArticleDetailsHandler
 from handlers.weixin import WeixinHandler
 
 url_patterns = [
@@ -7,7 +7,8 @@ url_patterns = [
     (r"/(favicon.ico)", StaticFileHandler, {"path": "/images/favicon.ico"}),
 
     (r"/weixin/?$", WeixinHandler),
-    (r"/articles/", ArticleListHandler),
+    (r"/articles/list/?$", ArticleListHandler),
+    (r"/articles/details/?$", ArticleDetailsHandler),
 
-    (r"/", RedirectHandler, {"url": "/articles/"}),
+    (r"/", RedirectHandler, {"url": "/articles/list/"}),
 ]
