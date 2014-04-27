@@ -1,0 +1,104 @@
+.info .author, .info .date, .info .read_more, .stat .read_info, .stat .like_info, .like{
+    float:left;
+}
+.author, .date, .read_info, .like_info{
+    position: relative;
+    top: 25px;
+    margin-left: 30px;
+}
+.like{
+    position: relative;
+    top: 7px;
+    margin-left: 20px;
+    cursor: pointer;
+    border-radius:10px;
+    -moz-border-radius:10px;
+    background-color: #f40;
+    padding: 2px 0 2px 0;
+}
+.like span{
+    color: white;
+    padding: 2px 5px 2px 5px;
+    margin: 5px;
+    font-size: 50px;
+}
+.read_more{
+    font-size: 35px;
+    padding: 15px;
+    font-weight: bold;
+    background-color: #2e7dc6;
+    color: white;
+    text-decoration: none;
+}
+.info .date{
+    margin-left: 20px;
+}
+.title, .profile, .info, .picture{
+    margin:30px;
+}
+.picture img{
+    width: 100%;   
+}
+.title{
+    font-family: "Microsoft YaHei" ! important;
+    font-size: 45px;
+    font-weight: bold;
+}
+.profile{
+    font-size: 30px;
+    text-indent: 2em;
+    line-height: 45px;
+}
+.info, .stat{
+    font-size: 25px;
+}
+.paging{
+    font-size: 30px;
+}
+.paging a{
+    text-decoration: none;
+    padding: 0 10px 0 10px;
+}
+.paging .curPage{
+    color: white;
+    background-color: #2e7dc6;
+}
+.tgj_footer{
+    width: 100%;
+    text-align: center;
+    padding-bottom: 20px;
+    padding-top:20px;
+}
+.tgj_header{
+    width: 100%;
+    text-align: center;
+    padding-bottom: 20px;
+}
+.tgj_header .navi .navi_item{
+    float: left;
+    width: 16.6%;
+    height: 110px;
+    background-color: #dbe1e9;
+    font-weight: 800;
+    font-size: 36px;
+    text-align: center;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    border-left: 4px solid white;
+    margin-bottom: 15px;
+}
+.tgj_header .navi .navi_item.cur-day{
+    background-color: #2e7dc6;
+}
+.tgj_header .navi .navi_item a{
+    color: black!important;
+    position: relative;
+    top: 10px;
+}
+.tgj_header .navi .navi_item.cur-day a{
+    color: white!important;
+}
+.navi_item a{
+    text-decoration: none;
+}

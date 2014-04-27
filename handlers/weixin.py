@@ -4,7 +4,7 @@ import settings
 import hashlib
 import time
 import logging
-logger = logging.getLogger("transformers." + __name__)
+logger = logging.getLogger("chilechilechile." + __name__)
 
 
 class WeixinHandler(RequestHandler):

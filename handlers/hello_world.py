@@ -2,7 +2,7 @@ from torndb import Connection
 from tornado.web import RequestHandler
 import settings
 import logging
-logger = logging.getLogger("transformers." + __name__)
+logger = logging.getLogger("chilechilechile." + __name__)
 
 
 class HelloWorldHandler(RequestHandler):
