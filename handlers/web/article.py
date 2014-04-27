@@ -11,7 +11,7 @@ logger = logging.getLogger("chilechilechile." + __name__)
 class ArticleListHandler(RequestHandler):
     def get(self):
         template_name = "article_list.html"
-        day = self.get_argument("day", "Mon")
+        day = self.get_argument("day", "all")
         cur_page = self.get_argument("page", "0")
         num_per_page = 5
 
@@ -25,9 +25,12 @@ class ArticleListHandler(RequestHandler):
         count = db.query(sql)[0]["COUNT(*)"]
         max_page = int(math.ceil((count + 0.0) / num_per_page))
 
-        sql = """SELECT * FROM articles WHERE day='{0}' ORDER BY time DESC
+        condition = "WHERE day='{0}'".format(day)
+        if day == "all":
+            condition = ""
+        sql = """SELECT * FROM articles {0} ORDER BY time DESC
                  LIMIT {1}, {2}
-              """.format(day, int(cur_page) * num_per_page, num_per_page)
+              """.format(condition, int(cur_page) * num_per_page, num_per_page)
         articles = db.query(sql)
         kwargs = dict(articles=articles,
                       day=day,
