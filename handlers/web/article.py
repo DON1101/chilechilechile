@@ -21,13 +21,14 @@ class ArticleListHandler(RequestHandler):
                         settings.DATABASE_PASSWORD,
                         )
 
-        sql = "SELECT COUNT(*) FROM articles WHERE day='{0}';".format(day)
-        count = db.query(sql)[0]["COUNT(*)"]
-        max_page = int(math.ceil((count + 0.0) / num_per_page))
-
         condition = "WHERE day='{0}'".format(day)
         if day == "all":
             condition = ""
+
+        sql = "SELECT COUNT(*) FROM articles {0}".format(condition)
+        count = db.query(sql)[0]["COUNT(*)"]
+        max_page = int(math.ceil((count + 0.0) / num_per_page))
+
         sql = """SELECT * FROM articles {0} ORDER BY time DESC
                  LIMIT {1}, {2}
               """.format(condition, int(cur_page) * num_per_page, num_per_page)
