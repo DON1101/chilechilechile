@@ -2,4 +2,18 @@
 
 {% block content %}
 {% raw article_content_html %}
+
+<div class="article-info">
+    <div class="stat">
+        <div class="read_info">浏览 <strong>{{ article["read_count"] }}</strong></div>
+        <!--<div class="comment_info">评论 <strong>0</strong></div>-->
+        <div class="like_info">点赞 <strong>{{ article["like_count"] }}</strong></div>
+    </div>
+    <div class="like">
+        <span>点我赞一个</span>
+    </div>
+    <div class="hidden like_done">
+        已赞！
+    </div>
+</div>
 {% end %}

@@ -32,6 +32,11 @@ class ArticleListHandler(RequestHandler):
                  LIMIT {1}, {2}
               """.format(condition, int(cur_page) * num_per_page, num_per_page)
         articles = db.query(sql)
+
+        for art in articles:
+            art["read_count"], art["like_count"] = \
+                get_article_statistics(db, art["id"])
+
         kwargs = dict(articles=articles,
                       day=day,
                       cur_page=cur_page,
@@ -59,6 +64,9 @@ class ArticleDetailsHandler(RequestHandler):
             article_id)
         article = db.query(sql)[0]
 
+        article["read_count"], article["like_count"] = \
+            get_article_statistics(db, article["id"])
+
         http_client = AsyncHTTPClient()
         response = yield http_client.fetch(article["url"])
         article_content_html = response.body
@@ -71,3 +79,15 @@ class ArticleDetailsHandler(RequestHandler):
             template_name,
             **kwargs
         )
+
+
+def get_article_statistics(db_conn, article_id):
+    sql = """SELECT COUNT(*) FROM article_likes WHERE article_id='{0}'
+          """.format(article_id)
+    like_count = db_conn.query(sql)[0]["COUNT(*)"]
+
+    sql = """SELECT COUNT(*) FROM article_reads WHERE article_id='{0}'
+          """.format(article_id)
+    read_count = db_conn.query(sql)[0]["COUNT(*)"]
+
+    return (read_count, like_count)

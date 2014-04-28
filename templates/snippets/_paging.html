@@ -1,4 +1,4 @@
-{% if locals().get('cur_page', False) %}
+{% if "cur_page" in locals() %}
 <div class="paging">第 
     {% for page in range(max_page) %}
     <a href="?day={{ day }}&page={{ page }}" {% if cur_page == page %}class="curPage"{% end %}>{{ page + 1 }}</a> |

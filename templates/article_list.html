@@ -11,11 +11,11 @@
         <div class="info">
             <a class="read_more" href="/articles/details/?id={{ article["id"] }}">继续阅读</a>
             <div class="author">作者：{{ article["author"] }}</div>
-            <div class="date">{{ article["time"] }}</div>
+            <div class="date">{{ article["time"].strftime("%Y-%m-%d") }}</div>
         </div>
         <div class="stat">
-            <div class="read_info">浏览 <strong></strong></div>
-            <div class="like_info">点赞 <strong></strong></div>
+            <div class="read_info">浏览 <strong>{{ article["read_count"] }}</strong></div>
+            <div class="like_info">点赞 <strong>{{ article["like_count"] }}</strong></div>
             <div class="like"  article_id="{{ article["id"] }}">
                 <span>赞</span>
             </div>
