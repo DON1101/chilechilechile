@@ -12,7 +12,7 @@ class ArticleListHandler(RequestHandler):
     def get(self):
         template_name = "article_list.html"
         day = self.get_argument("day", "all")
-        cur_page = self.get_argument("page", "0")
+        cur_page = self.get_argument("page", 0)
         num_per_page = 5
 
         db = Connection(settings.DATABASE_SERVER,
@@ -39,7 +39,7 @@ class ArticleListHandler(RequestHandler):
 
         kwargs = dict(articles=articles,
                       day=day,
-                      cur_page=cur_page,
+                      cur_page=int(cur_page),
                       max_page=max_page)
 
         super(ArticleListHandler, self).render(
@@ -65,7 +65,7 @@ class ArticleDetailsHandler(RequestHandler):
         article = db.query(sql)[0]
 
         article["read_count"], article["like_count"] = \
-            get_article_statistics(db, article["id"])
+            get_article_statistics(db, article_id)
 
         http_client = AsyncHTTPClient()
         response = yield http_client.fetch(article["url"])
