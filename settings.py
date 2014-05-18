@@ -113,6 +113,7 @@ if options.config:
 settings['cookie_secret'] = COOKIE_SECRET
 
 SITE_NAME = "chilechilechile"
+SITE_HTTP_URL = "http://127.0.0.1"
 
 ##################################
 # chilechilechile related config #
@@ -122,31 +123,31 @@ ARTICLE_CATEGORIES = [
         "title": "星期一，旅行食记",
         "description": "一趟旅行，就是一场味蕾的冒险。跨越七大洲，精心收藏大家旅行中的美食，有饮毛茹血的刺激原始，有最地道的巷弄庶民餐厅，也有皇宫城堡的亘古奢华……",
         "pic_url": "http://mmsns.qpic.cn/mmsns/8gATibUoyKqhz5jXSu6H4alwA9ic4V5XibzbEAY7apqm3YcfcRpwSXRicA/0",
-        "article_url": "articles/list/?day=Mon&page=0",
+        "article_url": SITE_HTTP_URL + "/articles/list/?day=Mon&page=0",
     },
     {
         "title": "星期二，精神食粮",
         "description": "当浮躁成为社会的常态，什么样的精神食粮，最能安抚你的内心？一段散步，一次KTV，一本好书，一张唱片，一次长跑，一部电影……",
         "pic_url": "http://mmsns.qpic.cn/mmsns/8gATibUoyKqhz5jXSu6H4alwA9ic4V5XibzOmwicicYLIBhCQdEaS3fIwFw/0",
-        "article_url": "articles/list/?day=Tue&page=0",
+        "article_url": SITE_HTTP_URL + "/articles/list/?day=Tue&page=0",
     },
     {
         "title": "星期三，吃情男女",
         "description": "这是鼓励你从人生争取更多的一个专栏。自由社会的现代人，日常的饮食起居所面对的选择已经多得不可收拾。选择餐厅，选择菜式，选择饮料，选择甜品……还没有包括最重要的选择，比如要不要同居？要不要结婚？要不要孩子？等等等等",
         "pic_url": "http://mmsns.qpic.cn/mmsns/8gATibUoyKqjzkI9psr3RA0n2oFvw1HUPicRlYkfuN0cUuRgeZsO8CUA/0",
-        "article_url": "articles/list/?day=Wed&page=0",
+        "article_url": SITE_HTTP_URL + "/articles/list/?day=Wed&page=0",
     },
     {
         "title": "星期四，私房推荐",
         "description": "私宅料理，靠口耳相传。私房，又多了相亲相爱，一般人我不告诉他的意思。你最爱的那间餐厅，最想为Ta做的那道料理，具体怎么做，味道如何，是否可以与我们分享？",
         "pic_url": "http://mmsns.qpic.cn/mmsns/8gATibUoyKqhpPc5up34Nk3mUcgrt4jhzrUIdsSEYecux94y86Ugib3A/0",
-        "article_url": "articles/list/?day=Thu&page=0",
+        "article_url": SITE_HTTP_URL + "/articles/list/?day=Thu&page=0",
     },
     {
         "title": "星期五，话题探讨",
         "description": "“吃”是一个十分容易拉近关系的话题！礼拜五：素材收集，什么样的饮食话题你最关注，请告诉微君。",
         "pic_url": "http://mmsns.qpic.cn/mmsns/8gATibUoyKqjdnsNfHvSM44u0rQaypGib6tRPTH6Fk85c8xfaNduEQGQ/0",
-        "article_url": "articles/list/?day=Fri&page=0",
+        "article_url": SITE_HTTP_URL + "/articles/list/?day=Fri&page=0",
     },
 ]
 
