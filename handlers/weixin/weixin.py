@@ -33,22 +33,32 @@ class WeixinHandler(RequestHandler):
         xml = etree.fromstring(str_xml)  # xml parsing
         content = xml.find("Content").text
         msgType = xml.find("MsgType").text
-        fromUser = xml.find("FromUserName").text
-        toUser = xml.find("ToUserName").text
+        to_user = xml.find("FromUserName").text
+        from_user = xml.find("ToUserName").text
 
-        textTpl = "<xml>\n\
-                    <ToUserName><![CDATA[%s]]></ToUserName>\n\
-                    <FromUserName><![CDATA[%s]]></FromUserName>\n\
-                    <CreateTime>%s</CreateTime>\n\
-                    <MsgType><![CDATA[%s]]></MsgType>\n\
-                    <Content><![CDATA[%s]]></Content>\n\
-                    <FuncFlag>0</FuncFlag>\n\
-                   </xml>"
-        response = textTpl % (fromUser,
-                              toUser,
-                              int(time.time()),
-                              "text",
-                              content
-                              )
+        response = self.construct_text_response(
+            from_user,
+            to_user,
+            int(time.time()),
+            "text",
+            content
+        )
         self.write(response)
         self.flush()
+
+    def construct_text_response(self, from_user, to_user, timestamp, content):
+        template = ("<xml>"
+                    "<ToUserName><![CDATA[{0}]]></ToUserName>"
+                    "<FromUserName><![CDATA[{1}]]></FromUserName>"
+                    "<CreateTime>{2}</CreateTime>"
+                    "<MsgType><![CDATA[{3}]]></MsgType>"
+                    "<Content><![CDATA[{4}]]></Content>"
+                    "<FuncFlag>0</FuncFlag>"
+                    "</xml>")
+        response = template.format(to_user,
+                                   from_user,
+                                   timestamp,
+                                   "text",
+                                   content
+                                   )
+        return response
