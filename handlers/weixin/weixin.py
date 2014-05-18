@@ -31,7 +31,7 @@ class WeixinHandler(RequestHandler):
     def post(self):
         str_xml = self.request.body  # Get Post data
         xml = etree.fromstring(str_xml)  # xml parsing
-        content = xml.find("Content").text.decode("utf8")
+        content = xml.find("Content").text
         to_user = xml.find("FromUserName").text
         from_user = xml.find("ToUserName").text
 
@@ -57,7 +57,7 @@ class WeixinHandler(RequestHandler):
                 from_user,
                 to_user,
                 int(time.time()),
-                content
+                content.encode("utf8")
             )
 
         self.write(response)
