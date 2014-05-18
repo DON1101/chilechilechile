@@ -32,32 +32,98 @@ class WeixinHandler(RequestHandler):
         str_xml = self.request.body  # Get Post data
         xml = etree.fromstring(str_xml)  # xml parsing
         content = xml.find("Content").text
-        msgType = xml.find("MsgType").text
         to_user = xml.find("FromUserName").text
         from_user = xml.find("ToUserName").text
 
-        response = self.construct_text_response(
-            from_user,
-            to_user,
-            int(time.time()),
-            content
-        )
+        response = ""
+
+        if content.isdigit():
+            day = int(content)
+            # Handle Monday ~ Friday filtering
+            if day >= 1 and day <= 5:
+                category = settings.ARTICLE_CATEGORIES[day - 1]
+                response = self.make_single_pic_response(
+                    from_user,
+                    to_user,
+                    int(time.time()),
+                    category["title"],
+                    category["description"],
+                    category["pic_url"],
+                    category["article_url"],
+                )
+        else:
+            # Handle other filtering
+            response = self.make_filtering_response(
+                from_user,
+                to_user,
+                int(time.time()),
+                content
+            )
+
         self.write(response)
         self.flush()
 
-    def construct_text_response(self, from_user, to_user, timestamp, content):
+    def make_filtering_response(self, from_user, to_user, timestamp, content):
+        import article_filtering
+
+        for filter_item in article_filtering.ARTICLE_FILTERING:
+            if content in filter_item["keys"]:
+                return self.make_single_pic_response(
+                    from_user,
+                    to_user,
+                    timestamp,
+                    filter_item["title"],
+                    filter_item["description"],
+                    filter_item["pic_url"],
+                    filter_item["article_url"],
+                )
+
+    def make_text_response(self, from_user, to_user, timestamp, content):
         template = ("<xml>" +
-                    "<ToUserName><![CDATA[{0}]]></ToUserName>" +
-                    "<FromUserName><![CDATA[{1}]]></FromUserName>" +
-                    "<CreateTime>{2}</CreateTime>" +
-                    "<MsgType><![CDATA[{3}]]></MsgType>" +
-                    "<Content><![CDATA[{4}]]></Content>" +
+                    "<ToUserName><![CDATA[%s]]></ToUserName>" +
+                    "<FromUserName><![CDATA[%s]]></FromUserName>" +
+                    "<CreateTime>%s</CreateTime>" +
+                    "<MsgType><![CDATA[%s]]></MsgType>" +
+                    "<Content><![CDATA[%s]]></Content>" +
                     "<FuncFlag>0</FuncFlag>" +
                     "</xml>")
-        response = template.format(to_user,
-                                   from_user,
-                                   timestamp,
-                                   "text",
-                                   content
-                                   )
+        response = template % (to_user,
+                               from_user,
+                               timestamp,
+                               "text",
+                               content
+                               )
+        return response
+
+    def make_single_pic_response(self,
+                                 from_user,
+                                 to_user,
+                                 timestamp,
+                                 title,
+                                 description,
+                                 pic_url,
+                                 article_url):
+        template = ("<xml>"
+                    "<ToUserName><![CDATA[%s]]></ToUserName>"
+                    "<FromUserName><![CDATA[%s]]></FromUserName>"
+                    "<CreateTime>%s</CreateTime>"
+                    "<MsgType><![CDATA[news]]></MsgType>"
+                    "<ArticleCount>1</ArticleCount>"
+                    "<Articles>"
+                    "   <item>"
+                    "       <Title><![CDATA[%s]]></Title>"
+                    "       <Description><![CDATA[%s]]></Description>"
+                    "       <PicUrl><![CDATA[%s]]></PicUrl>"
+                    "       <Url><![CDATA[%s]]></Url>"
+                    "   </item>"
+                    "</Articles>"
+                    "</xml>")
+        response = template % (to_user,
+                               from_user,
+                               timestamp,
+                               title,
+                               description,
+                               pic_url,
+                               article_url
+                               )
         return response
