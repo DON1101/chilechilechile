@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # For single picture articles
 ARTICLE_FILTERING = [
     {
