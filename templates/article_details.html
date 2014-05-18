@@ -1,5 +1,36 @@
 {% extends "base.html" %}
 
+{% block extra_head %}
+<style type="text/css">
+    .hidden{
+        display: none;   
+    }
+    .read_info, .like_info{
+        float: left;
+        margin-right: 15px;
+    }
+    .like, .like_done{
+        float: left;    
+    }
+    .like span{
+        cursor: pointer;
+        background-color: #2e7dc6;
+        color: white;
+        padding: 2px 5px 2px 5px;
+        margin: 5px;
+    }
+    .tgj_footer, .tgj_header{
+        width: 100%;
+        text-align: center;
+        padding-bottom: 30px;
+    }
+    .like_done{
+        color: pink;
+        font-weight: bold;
+    }
+</style>
+{% end %}
+
 {% block content %}
 {% raw article_content_html %}
 
