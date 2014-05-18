@@ -47,13 +47,13 @@ class WeixinHandler(RequestHandler):
         self.flush()
 
     def construct_text_response(self, from_user, to_user, timestamp, content):
-        template = ("<xml>"
-                    "<ToUserName><![CDATA[{0}]]></ToUserName>"
-                    "<FromUserName><![CDATA[{1}]]></FromUserName>"
-                    "<CreateTime>{2}</CreateTime>"
-                    "<MsgType><![CDATA[{3}]]></MsgType>"
-                    "<Content><![CDATA[{4}]]></Content>"
-                    "<FuncFlag>0</FuncFlag>"
+        template = ("<xml>" +
+                    "<ToUserName><![CDATA[{0}]]></ToUserName>" +
+                    "<FromUserName><![CDATA[{1}]]></FromUserName>" +
+                    "<CreateTime>{2}</CreateTime>" +
+                    "<MsgType><![CDATA[{3}]]></MsgType>" +
+                    "<Content><![CDATA[{4}]]></Content>" +
+                    "<FuncFlag>0</FuncFlag>" +
                     "</xml>")
         response = template.format(to_user,
                                    from_user,
