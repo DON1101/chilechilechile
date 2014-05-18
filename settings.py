@@ -49,6 +49,9 @@ SESSION_COOKIE_SECURE = False
 SESSION_COOKIE_HTTPONLY = True
 COOKIE_SECRET = "your-cookie-secret"
 
+SITE_NAME = "chilechilechile"
+SITE_HTTP_URL = "http://127.0.0.1"
+
 ####################
 # DATABASE RELATED #
 ####################
@@ -112,8 +115,6 @@ if options.config:
 
 settings['cookie_secret'] = COOKIE_SECRET
 
-SITE_NAME = "chilechilechile"
-SITE_HTTP_URL = "http://127.0.0.1"
 
 ##################################
 # chilechilechile related config #
