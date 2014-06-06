@@ -26,6 +26,4 @@ class ProxyHandler(BaseHandler):
             "proxy/article_content.html",
             **kwargs
         )
-        # self.write(body)
-        # self.flush()
-        # self.finish()
+
