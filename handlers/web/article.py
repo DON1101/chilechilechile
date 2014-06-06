@@ -1,14 +1,16 @@
 import math
+import urllib
 from torndb import Connection
 from tornado import gen
-from tornado.web import RequestHandler
 from tornado.httpclient import AsyncHTTPClient
 import settings
 import logging
 logger = logging.getLogger("chilechilechile." + __name__)
 
+from handlers.base import BaseHandler
 
-class ArticleListHandler(RequestHandler):
+
+class ArticleListHandler(BaseHandler):
     def get(self):
         template_name = "article_list.html"
         day = self.get_argument("day", "all")
@@ -49,7 +51,7 @@ class ArticleListHandler(RequestHandler):
         )
 
 
-class ArticleDetailsHandler(RequestHandler):
+class ArticleDetailsHandler(BaseHandler):
     @gen.coroutine
     def get(self):
         template_name = "article_details.html"
@@ -67,13 +69,14 @@ class ArticleDetailsHandler(RequestHandler):
 
         article["read_count"], article["like_count"] = \
             get_article_statistics(db, article_id)
+        article["url"] = urllib.quote(article["url"])
 
-        http_client = AsyncHTTPClient()
-        response = yield http_client.fetch(article["url"])
-        article_content_html = response.body
+        # http_client = AsyncHTTPClient()
+        # response = yield http_client.fetch(article["url"])
+        # article_content_html = response.body
 
         kwargs = dict(article=article,
-                      article_content_html=article_content_html,
+                      # article_content_html=article_content_html,
                       day="")
 
         super(ArticleDetailsHandler, self).render(

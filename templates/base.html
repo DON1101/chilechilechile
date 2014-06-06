@@ -4,6 +4,7 @@
     <head>
         <title>{% block title %}并非关于吃的一切{% end %}</title>
     </head>
+
     {% block head_style_sheets %}
         {% include "snippets/_stylesheets.html" %}
     {% end %}
@@ -21,4 +22,8 @@
             {% include "snippets/_footer.html" %}
         {% end %}
     </body>
+
+    {% include "snippets/_scripts.html" %}
+
+    {% block extra_scripts %}{% end %}
 </html>

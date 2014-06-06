@@ -29,25 +29,21 @@
     color: pink;
     font-weight: bold;
 }
-.tgj_header .navi .navi_item{
-    float: left;
-    width: 16.6%;
-    height: 110px;
-    background-color: #dbe1e9;
-    font-weight: 800;
-    font-size: 36px;
-    text-align: center;
-    box-sizing:border-box;
-    -moz-box-sizing:border-box;
-    -webkit-box-sizing:border-box;
-    border-left: 4px solid white;
-    margin-bottom: 15px;
+.article-content{
+    height: 100%;
+}
+.article-content iframe{
+    width: 100%;
+    height: 100%;
+    border: none;
 }
 </style>
 {% end %}
 
 {% block content %}
-{% raw article_content_html %}
+<div class="article-content">
+    <iframe id="article-iframe" src="/proxy/?url={{ article["url"] }}"></iframe>
+</div>
 
 <div class="article-info">
     <div class="stat">
