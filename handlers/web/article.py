@@ -1,8 +1,8 @@
+import datetime
 import math
 import urllib
 from torndb import Connection
 from tornado import gen
-from tornado.httpclient import AsyncHTTPClient
 import settings
 import logging
 logger = logging.getLogger("chilechilechile." + __name__)
@@ -45,17 +45,57 @@ class ArticleListHandler(BaseHandler):
                       cur_page=int(cur_page),
                       max_page=max_page)
 
-        super(ArticleListHandler, self).render(
-            template_name,
-            **kwargs
+        self.render(template_name, **kwargs)
+
+    def post(self):
+        title = self.get_argument("title", "")
+        author = self.get_argument("author", "")
+        category = self.get_argument("category", "")
+        date = self.get_argument("date", "")
+        profile = self.get_argument("profile", "")
+        picUrl = self.get_argument("picUrl", "")
+        url = self.get_argument("url", "")
+
+        time = datetime.datetime.strptime(date, "%m/%d/%Y")
+        day = {
+            0: "Mon",
+            1: "Tue",
+            2: "Wed",
+            3: "Thu",
+            4: "Fri",
+            5: "Sat",
+            6: "Sun",
+        }[time.weekday()]
+
+        sql = """INSERT INTO articles (`title`, `author`, `day`, `time`, `url`, `profile`, `picUrl`, `category`)
+                 VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}');
+              """.format(
+              title,
+              author,
+              day,
+              time,
+              url,
+              profile,
+              picUrl,
+              category
         )
+        db = Connection(settings.DATABASE_SERVER,
+                        settings.DATABASE_NAME,
+                        settings.DATABASE_USER,
+                        settings.DATABASE_PASSWORD,
+                        )
+        lastrowid = db.execute(sql)
+        if lastrowid:
+            self.redirect("/articles/details/{0}/".format(lastrowid))
+        else:
+            template_name = "/upload_error.html"
+            self.render(template_name)
 
 
 class ArticleDetailsHandler(BaseHandler):
     @gen.coroutine
-    def get(self):
+    def get(self, article_id):
         template_name = "article_details.html"
-        article_id = self.get_argument("id", "")
 
         db = Connection(settings.DATABASE_SERVER,
                         settings.DATABASE_NAME,
@@ -63,7 +103,7 @@ class ArticleDetailsHandler(BaseHandler):
                         settings.DATABASE_PASSWORD,
                         )
 
-        sql = "SELECT title, url FROM articles WHERE id='{0}'".format(
+        sql = "SELECT * FROM articles WHERE id='{0}'".format(
             article_id)
         article = db.query(sql)[0]
 
@@ -71,13 +111,8 @@ class ArticleDetailsHandler(BaseHandler):
             get_article_statistics(db, article_id)
         article["url"] = urllib.quote(article["url"])
 
-        # http_client = AsyncHTTPClient()
-        # response = yield http_client.fetch(article["url"])
-        # article_content_html = response.body
-
         kwargs = dict(article=article,
-                      # article_content_html=article_content_html,
-                      day="")
+                      day=article["day"])
 
         super(ArticleDetailsHandler, self).render(
             template_name,

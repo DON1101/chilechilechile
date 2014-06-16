@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block header %}{% end %}
+{% block footer %}{% end %}
+
+{% block content %}
+<form id="upload_form" action="/articles/list/" method="post" target="_blank">
+    <table border="1">
+        <tr>
+            <td>Title</td>
+            <td><input type="text" name="title" size="100"/></td>
+        </tr>
+        <tr>
+            <td>Author</td>
+            <td><input type="text" name="author" size="100"/></td>
+        </tr>
+        <tr>
+            <td>Category</td>
+            <td><input type="text" name="category" size="100"/></td>
+        </tr>
+        <tr>
+            <td>Date</td>
+            <td><input id="datepicker" type="text" name="date" size="100"/></td>
+        </tr>
+        <tr>
+            <td>Profile</td>
+            <td><textarea name="profile" rows="10" cols="100"></textarea></td>
+        </tr>
+        <tr>
+            <td>Picture Url</td>
+            <td><input type="text" name="picUrl" size="100"/></td>
+        </tr>
+        <tr>
+            <td>Article Url</td>
+            <td><input type="text" name="url" size="100"/></td>
+        </tr>
+    </table>
+    <input id="btn_add" type="submit" value="Submit"/>
+</form>
+{% end %}

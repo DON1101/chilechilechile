@@ -46,19 +46,19 @@ html, body{
 }
 .title{
     font-family: "Microsoft YaHei" ! important;
-    font-size: 45px;
+    font-size: 1.6em;
     font-weight: bold;
 }
 .profile{
-    font-size: 30px;
+    font-size: 1.4em;
     text-indent: 2em;
-    line-height: 45px;
+    line-height: 2.5em;
 }
 .info, .stat{
     font-size: 25px;
 }
 .paging{
-    font-size: 1.4em;
+    font-size: 1em;
 }
 .paging a{
     text-decoration: none;

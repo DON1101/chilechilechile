@@ -3,4 +3,5 @@ function resize_iframe(obj) {
 }
 
 $(document).ready(function(){
+    $("#datepicker").datepicker();
 });
