@@ -30,7 +30,9 @@
     font-weight: bold;
 }
 .article-content{
-    height: 100%;
+    /*height: 100%;*/
+    -webkit-overflow-scrolling:touch;
+    overflow: auto;
 }
 .article-content iframe{
     width: 100%;
@@ -42,7 +44,7 @@
 
 {% block content %}
 <div class="article-content">
-    <iframe id="article-iframe" src="/proxy/?url={{ article["url"] }}"></iframe>
+    <iframe id="article-iframe" src="/proxy/?url={{ article["url"] }}" onload="resize_iframe(this);"></iframe>
 </div>
 
 <div class="article-info">
