@@ -51,6 +51,7 @@ COOKIE_SECRET = "your-cookie-secret"
 
 SITE_NAME = "chilechilechile"
 SITE_HTTP_URL = "http://127.0.0.1"
+SITE_DOMAIN = "127.0.0.1"
 
 ####################
 # DATABASE RELATED #

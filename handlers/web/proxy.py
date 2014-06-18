@@ -18,7 +18,7 @@ class ProxyHandler(BaseHandler):
         response = yield http_client.fetch(url)
         body = response.body.replace(
             "document.domain = \"qq.com\"",
-            "document.domain = \"{0}\"".format(settings.SESSION_COOKIE_DOMAIN),
+            "document.domain = \"{0}\"".format(settings.SITE_DOMAIN),
         )
 
         kwargs = dict(body_html=body)
