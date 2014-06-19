@@ -1,0 +1,103 @@
+body, .app{
+    background-color: #f7f7f7;
+}
+
+/* ---------------------------
+    START: Custom vendor css;
+    ------------------------ */
+
+.navbar-bottom{
+    background: #383838;
+}
+
+.navbar-top{
+    background: #2e7dc6;
+    color: #FFFFFF;
+}
+
+.navbar-bottom .btn, .navbar-bottom .btn-navbar, .navbar-bottom .btn-navbar:hover{
+    color: #C0C0C0;
+}
+
+.navbar-top .btn, .navbar-top .btn-navbar, .navbar-top .btn-navbar:hover{
+    color: #FFFFFF;
+}
+
+.list-group-item{
+    width: 95%;
+    margin: 10px auto;
+    border: 1px solid #ddd;
+    border-radius: 5px!important;
+}
+
+/* ----------------------------
+    START: Article List;
+    ----------------------- */
+.info .author, .info .date, .info .read_more, .stat .read_info, .stat .like_info, .like{
+    float:left;
+    font-size: 0.4em;
+}
+.author, .date, .read_info, .like_info{
+    position: relative;
+    top: 10px;
+    margin-left: 7px;
+}
+.like{
+    position: relative;
+    top: 7px;
+    margin-left: 20px;
+    cursor: pointer;
+    border-radius:10px;
+    -moz-border-radius:10px;
+    background-color: #f40;
+    padding: 2px 0 2px 0;
+}
+.like span{
+    color: white;
+    padding: 2px 5px 2px 5px;
+    margin: 5px;
+    font-size: 1em;
+}
+.read_more{
+    font-size: 2em;
+    padding: 5px;
+    font-weight: bold;
+    background-color: #2e7dc6;
+    color: white;
+    text-decoration: none;
+}
+.info .date{
+    margin-left: 10px;
+}
+.picture img{
+    width: 100%;   
+}
+.title{
+    font-family: "Microsoft YaHei" ! important;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.profile{
+    font-size: 1em;
+    text-indent: 2em;
+    line-height: 2em;
+}
+.info, .stat{
+    font-size: 25px;
+}
+
+/* --------------------------------
+    START: Article Details;
+    ------------------------- */
+
+.article-content iframe{
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.article-content{
+    height: 100%;
+    -webkit-overflow-scrolling:touch;
+    overflow: auto;
+}

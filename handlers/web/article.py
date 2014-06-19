@@ -12,7 +12,8 @@ from handlers.base import BaseHandler
 
 class ArticleListHandler(BaseHandler):
     def get(self):
-        template_name = "article_list.html"
+        # template_name = "article_list.html"
+        template_name = "mobile/article_list.html"
         day = self.get_argument("day", "all")
         cur_page = self.get_argument("page", 0)
         num_per_page = 5
@@ -95,7 +96,8 @@ class ArticleListHandler(BaseHandler):
 class ArticleDetailsHandler(BaseHandler):
     @gen.coroutine
     def get(self, article_id):
-        template_name = "article_details.html"
+        # template_name = "article_details.html"
+        template_name = "mobile/article_details.html"
 
         db = Connection(settings.DATABASE_SERVER,
                         settings.DATABASE_NAME,

@@ -1,0 +1,24 @@
+.clickable{
+    cursor: pointer;
+}
+
+.float-left{
+    float: left;
+}
+
+.full-height{
+    height: 100%;
+}
+
+.full-width{
+    width: 100%;
+}
+
+
+.width-50-per{
+    width: 50%;
+}
+
+.x-center{
+    text-align: center;
+}

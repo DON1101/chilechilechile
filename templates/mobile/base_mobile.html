@@ -1,0 +1,32 @@
+{% extends ../base.html %}
+
+{% block head_style_sheets %}
+    {% include "snippets/_stylesheets_mobile.html" %}
+{% end %}
+
+{% block scripts %}
+    {% include "snippets/_scripts_mobile.html" %}
+{% end %}
+
+{% block header %}
+    {% include "snippets/_header_mobile.html" %}
+{% end %}
+
+{% block footer %}
+    {% include "snippets/_footer_mobile.html" %}
+{% end %}
+
+
+{% block content %}
+    {% block left_sidebar %}
+        <div ng-include="'/m/left-sidebar/'" class="sidebar sidebar-left" toggleable parent-active-class="sidebar-left-in" id="mainSidebar"></div>
+    {% end %}
+
+    <div class="app">
+        <div class="app-body">
+            <ng-view class="app-content">
+            </ng-view>
+        </div>
+    </div>
+{% end %}
+
