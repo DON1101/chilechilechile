@@ -104,6 +104,11 @@ body, .app{
     margin-top: 5px;
 }
 
+.paging a{
+    color: white;
+    text-decoration: none;
+}
+
 /* --------------------------------
     START: Article Details;
     ------------------------- */

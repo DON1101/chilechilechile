@@ -18,9 +18,9 @@ angular.module("chilechilechile", [
          controller: "MainCtrl"
         });
     $routeProvider.when(
-        '/article_list/:day',
+        '/article_list/:day/:page',
         {templateUrl:
-            function(params){ return '/articles/list/?day=' + params.day;},
+            function(params){ return '/articles/list/?day=' + params.day + '&page=' + params.page;},
          controller: "MainCtrl"
         });
     $routeProvider.when(
