@@ -18,8 +18,12 @@
 
 
 {% block content %}
+
     {% block left_sidebar %}
         <div ng-include="'/m/left-sidebar/'" class="sidebar sidebar-left" toggleable parent-active-class="sidebar-left-in" id="mainSidebar"></div>
+    {% end %}
+
+    {% block right_sidebar %}
     {% end %}
 
     <div class="app">

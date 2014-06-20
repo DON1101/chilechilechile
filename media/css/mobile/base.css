@@ -33,14 +33,30 @@ body, .app{
 /* ----------------------------
     START: Article List;
     ----------------------- */
-.info .author, .info .date, .info .read_more, .stat .read_info, .stat .like_info, .like{
-    float:left;
+.info .author,
+.info .date,
+.info .read_more,
+.stat .read_info,
+.stat .like_info,
+.like{
+    position: relative;
     font-size: 0.4em;
 }
-.author, .date, .read_info, .like_info{
-    position: relative;
-    top: 10px;
+.info .date,
+.info .read_more,
+.stat .read_info,
+.stat .like_info,
+.like{
     margin-left: 7px;
+}
+.info .author,
+.info .date{
+    float: left;
+}
+.stat .read_info,
+.stat .like_info,
+.like{
+    float: right;
 }
 .like{
     position: relative;
@@ -78,12 +94,14 @@ body, .app{
     font-weight: bold;
 }
 .profile{
-    font-size: 1em;
+    font-size: 1.2em;
     text-indent: 2em;
-    line-height: 2em;
+    line-height: 1.7em;
+    padding-top: 0.3em;
 }
 .info, .stat{
     font-size: 25px;
+    margin-top: 5px;
 }
 
 /* --------------------------------

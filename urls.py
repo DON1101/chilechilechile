@@ -25,6 +25,9 @@ url_patterns = [
     (r"/m/left-sidebar/?$", SimpleTemplateHandler,
      dict(template="mobile/left_sidebar.html")
      ),
+    (r"/m/right-sidebar/?$", SimpleTemplateHandler,
+     dict(template="mobile/right_sidebar.html")
+     ),
 
     # Proxy url visitor
     (r"/proxy/?$", ProxyHandler),

@@ -6,6 +6,10 @@
     float: left;
 }
 
+.float-right{
+    float: right;
+}
+
 .full-height{
     height: 100%;
 }
