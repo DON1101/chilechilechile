@@ -25,8 +25,3 @@ class ApiBaseHandler(BaseHandler):
 
     def check_xsrf_cookie(self):
         pass
-
-    def get_argument(self, name, default=[], strip=True):
-        return super(ApiBaseHandler, self).get_argument(
-            name, default, strip
-        ).decode("utf8").encode("utf8")
