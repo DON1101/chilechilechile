@@ -3,6 +3,8 @@ from handlers.web.article import ArticleListHandler, ArticleDetailsHandler
 from handlers.weixin import WeixinHandler
 from handlers.web.proxy import ProxyHandler
 from handlers.web.simple_template import SimpleTemplateHandler
+from handlers.web.api.article import RestfulArticleListHandler
+from handlers.web.api.comment import RestfulCommentsHandler
 
 url_patterns = [
     # Favicon
@@ -31,6 +33,10 @@ url_patterns = [
 
     # Proxy url visitor
     (r"/proxy/?$", ProxyHandler),
+
+    # RESTful API
+    (r"/api/articles/list/?$", RestfulArticleListHandler),
+    (r"/api/articles/comments/(?P<article_id>\w+)/?$", RestfulCommentsHandler),
 
     (r"/", RedirectHandler, {"url": "/articles/list/"}),
 ]

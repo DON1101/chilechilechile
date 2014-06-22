@@ -15,6 +15,20 @@ body, .app{
     color: #FFFFFF;
 }
 
+.navbar-top input{
+    color: black;
+}
+
+.navbar-app .btn.btn-search{
+    line-height: initial!important;
+    margin-top: 0px;
+}
+
+.navbar-app input.input-query{
+    margin-top: -5px;
+    width: 150px;
+}
+
 .navbar-bottom .btn, .navbar-bottom .btn-navbar, .navbar-bottom .btn-navbar:hover{
     color: #C0C0C0;
 }

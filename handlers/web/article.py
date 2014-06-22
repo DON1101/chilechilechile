@@ -15,7 +15,8 @@ class ArticleListHandler(BaseHandler):
         # template_name = "article_list.html"
         template_name = "mobile/article_list.html"
         day = self.get_argument("day", "all")
-        cur_page = self.get_argument("page", 0)
+        cur_page = self.get_argument("page", "0")
+        query = self.get_argument("query", "")
         num_per_page = 5
 
         db = Connection(settings.DATABASE_SERVER,
@@ -27,6 +28,11 @@ class ArticleListHandler(BaseHandler):
         condition = "WHERE day='{0}'".format(day)
         if day == "all":
             condition = ""
+        if query:
+            condition = """WHERE UPPER(title) LIKE '%%{0}%%'
+                           OR UPPER(profile) LIKE '%%{0}%%'
+                           OR UPPER(author) LIKE '%%{0}%%'
+                        """.format(query)
 
         sql = "SELECT COUNT(*) FROM articles {0}".format(condition)
         count = db.query(sql)[0]["COUNT(*)"]

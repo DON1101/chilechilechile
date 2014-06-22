@@ -153,6 +153,8 @@ ARTICLE_CATEGORIES = [
     },
 ]
 
+DEFAULT_USER_NAME = "匿名"
+
 try:
     from extra_settings import *
 except ImportError:

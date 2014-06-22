@@ -1,6 +1,9 @@
 <div class="navbar-top navbar navbar-app navbar-absolute-top">
     <div class="navbar-brand navbar-brand-center clickable" yield-to="title">
-        <span>并非关于吃的一切</span>
+        <input class="input-query col-sm-10 col-lg-11" type="text" ng-model="query" placeholder="搜索文章"/>
+        <button class="btn-search btn btn-primary" ng-click="go('/article_search/'+query)">
+          搜索
+        </button>
     </div>
 
     <div class="btn-group pull-right">

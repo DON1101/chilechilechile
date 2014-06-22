@@ -1,18 +1,40 @@
 <h1 class="app-name">评论</h1>
 
-<div class="scrollable sidebar-scrollable">
+<div class="scrollable sidebar-scrollable" ng-controller="CommentCtrl">
   <div class="scrollable-content">
-    <div class="list-group" toggle="off" bubble target="rightSidebar">
-      <div class="list-group-item">
-        <h1>唐国靖<br/>
-        <small>看起来好好吃！</small>
+    <div class="list-group" bubble target="rightSidebar">
+
+      <div bs-panel title="{[{ comments.length }]}条评论">
+        <input
+                bs-form-control
+                type="text" 
+                ng-model="my_comment.user_name"
+                label="我的名字" 
+                label-class="col-sm-2 col-lg-1" 
+                class="col-xs-9 col-sm-10 col-lg-11"
+                placeholder="您的大名是？默认为匿名"
+               />
+        <input
+                bs-form-control
+                type="text" 
+                ng-model="my_comment.user_email"
+                label="我的邮箱" 
+                label-class="col-sm-2 col-lg-1" 
+                class="col-xs-9 col-sm-10 col-lg-11"
+                placeholder="如果愿意留下您的邮箱地址"
+               />
+
+        <textarea type="text" ng-model="my_comment.comment_content" label="我的评论" bs-form-control></textarea>
+        <button class="btn btn-primary" ng-click="submit_comment()">提交</button>
+      </div>
+
+      <div ng-repeat="comment in comments" class="list-group-item">
+        <h1>{[{ comment.user_name }]}<br/>
+        <small>{[{ comment.content }]}</small>
         </h1>
       </div>
-      <div class="list-group-item">
-        <h1>李晓蕾<br/>
-        <small>我爱你！</small>
-        </h1>
-      </div>
+
+      <div style="height: 50px"></div>
     </div>
 
   </div>
