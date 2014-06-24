@@ -19,9 +19,14 @@ body, .app{
     color: black;
 }
 
+.search-bar{
+    position: absolute;
+}
+
 .navbar-app .btn.btn-search{
     line-height: initial!important;
-    margin-top: 0px;
+    margin-top: -5px;
+    color: white;
 }
 
 .navbar-app input.input-query{
@@ -137,4 +142,21 @@ body, .app{
     height: 100%;
     -webkit-overflow-scrolling:touch;
     overflow: auto;
+}
+
+/* ---------------------------------
+    START: Article comment;
+    ---------------------------- */
+
+.comment-user{
+    font-size: 1em;
+}
+
+.comment-time{
+    color: grey;
+    font-size: 1em;
+}
+
+.comment-content{
+    font-size: 1.5em;
 }

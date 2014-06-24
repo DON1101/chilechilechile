@@ -28,7 +28,7 @@ class RestfulCommentsHandler(ApiBaseHandler):
             user = db.query(sql)[0]
 
             comment["user_name"] = user["name"]
-            comment["time"] = comment["time"].strftime("%Y-%m-%d")
+            comment["time"] = comment["time"].strftime("%Y-%m-%d %H:%M:%S")
 
         kwargs = dict(comments=comments)
 

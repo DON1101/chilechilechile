@@ -29,9 +29,9 @@
       </div>
 
       <div ng-repeat="comment in comments" class="list-group-item">
-        <h1>{[{ comment.user_name }]}<br/>
-        <small>{[{ comment.content }]}</small>
-        </h1>
+          <div class="comment-user">{[{ comment.user_name }]} </div>
+          <div class="comment-time">{[{ comment.time }]}</div>
+          <div class="comment-content">{[{ comment.content }]}</div>
       </div>
 
       <div style="height: 50px"></div>

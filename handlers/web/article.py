@@ -32,6 +32,7 @@ class ArticleListHandler(BaseHandler):
             condition = """WHERE UPPER(title) LIKE '%%{0}%%'
                            OR UPPER(profile) LIKE '%%{0}%%'
                            OR UPPER(author) LIKE '%%{0}%%'
+                           OR UPPER(content) LIKE '%%{0}%%'
                         """.format(query)
 
         sql = "SELECT COUNT(*) FROM articles {0}".format(condition)
