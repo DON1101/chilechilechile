@@ -1,7 +1,7 @@
 <div ng-controller="ArticleListCtrl" class="full-height" id="">
   <div class="scrollable">
     <div class="scrollable-content">
-      <div class="list-group">
+      <div class="list-group" infinite-scroll="loadNextPage()">
         {% for article in articles %}
             <div class="article list-group-item" ng-click="go('/article_details/{{ article["id"] }}')">
                 <div class="title">{{ article["title"] }}</div>
@@ -14,7 +14,7 @@
                     <div class="date">{{ article["time"].strftime("%Y-%m-%d") }}</div>
                 </div>
                 <div class="stat">
-                    <div class="like_info">点赞 <strong>{{ article["like_count"] }}</strong></div>
+                    <div class="like_info">评论 <strong>{{ article["comment_count"] }}</strong></div>
                     <div class="read_info">浏览 <strong>{{ article["read_count"] }}</strong></div>
                 </div>
                 <div style="clear:both;"></div>

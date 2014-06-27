@@ -8,22 +8,6 @@ angular.module("chilechilechile", [
     "infinite-scroll",
     ]
 )
-.factory('mySharedService', function($rootScope) {
-    var $sharedService = {};
-
-    $sharedService.message = '';
-
-    $sharedService.prepForBroadcast = function(msg) {
-        this.message = msg;
-        this.broadcastItem();
-    };
-
-    $sharedService.broadcastItem = function() {
-        $rootScope.$broadcast('handleBroadcast');
-    };
-
-    return $sharedService;
-})
 .config(function($interpolateProvider){
     $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
     }
@@ -58,21 +42,36 @@ angular.module("chilechilechile", [
 
 angularModule
 .controller("MainCtrl", function($scope, $location, $http, $window) {
+    $scope.cur_ctrl = "";
 
     $scope.go = function(path) {
       $location.path(path);
     };
 
+    $scope.cur_controller = function(controller){
+        return $scope.cur_ctrl == controller;
+    }
+
     $scope.broadcast = function(eventName, args){
         $scope.$broadcast(eventName, args);
     };
 
+    $scope.$on("controller_changed", function(event, msg){
+        controller = angular.fromJson(msg)["controller"];
+        $scope.cur_ctrl = controller;
+    });
+
 })
-.controller("ArticleListCtrl", function($scope, $location, $http) {
+.controller("ArticleListCtrl", function($rootScope, $scope, $location, $http) {
     $scope.day = 0;
     $scope.max_page = 0;
     $scope.next_page = 0;
     $scope.articles = [];
+
+    $rootScope.$broadcast(
+        "controller_changed",
+        {"controller": "article_list"}
+    );
 
     $scope.init = function(day, max_page){
         $scope.day = day;
@@ -102,6 +101,10 @@ angularModule
     };
 })
 .controller("ArticleDetailsCtrl", function($rootScope, $scope, $location, $http) {
+    $rootScope.$broadcast(
+        "controller_changed",
+        {"controller": "article_details"}
+    );
 
     $scope.send_comments_init = function(article_id) {
         params = {
@@ -110,8 +113,10 @@ angularModule
             "name": "comments_init",
             "args": {"article_id": article_id}
         };
+
         $rootScope.$broadcast("comments_init", angular.toJson(params));
     };
+
 })
 .controller("CommentCtrl", function($scope, $location, $http) {
     $scope.article_id = "";
@@ -130,6 +135,11 @@ angularModule
     };
 
     $scope.submit_comment = function(){
+        if(typeof $scope.my_comment.comment_content == "undefined" || 
+           $scope.my_comment.comment_content.trim().length == 0){
+            alert("评论不能为空哦！");
+            return;
+        }
 
         url = "/api/articles/comments/" + $scope.article_id;
         $http.post(
@@ -161,6 +171,8 @@ angularModule
 ;
 
 
-function resize_iframe(obj) {
-    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+function use_image_proxy(){
+    $("img").each(function(){
+        $(this).src = "/image-proxy/?url=" + $(this).src;
+    });
 }

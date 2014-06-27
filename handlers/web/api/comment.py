@@ -5,6 +5,7 @@ import logging
 logger = logging.getLogger("chilechilechile." + __name__)
 
 from handlers.base_api import ApiBaseHandler
+from utils.lib import convert_to_time_zone
 
 
 class RestfulCommentsHandler(ApiBaseHandler):
@@ -28,6 +29,8 @@ class RestfulCommentsHandler(ApiBaseHandler):
             user = db.query(sql)[0]
 
             comment["user_name"] = user["name"]
+            comment["time"] = convert_to_time_zone(comment["time"],
+                                                   "Asia/Shanghai")
             comment["time"] = comment["time"].strftime("%Y-%m-%d %H:%M:%S")
 
         kwargs = dict(comments=comments)

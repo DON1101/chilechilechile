@@ -45,8 +45,11 @@ class ArticleListHandler(BaseHandler):
         articles = db.query(sql)
 
         for art in articles:
-            art["read_count"], art["like_count"] = \
+            art["read_count"], art["comment_count"] = \
                 get_article_statistics(db, art["id"])
+            art["picUrl"] = "/image-proxy/?url={0}".format(
+                urllib.quote(art["picUrl"])
+            )
 
         kwargs = dict(articles=articles,
                       day=day,
@@ -101,7 +104,6 @@ class ArticleListHandler(BaseHandler):
 
 
 class ArticleDetailsHandler(BaseHandler):
-    @gen.coroutine
     def get(self, article_id):
         # template_name = "article_details.html"
         template_name = "mobile/article_details.html"
@@ -116,9 +118,16 @@ class ArticleDetailsHandler(BaseHandler):
             article_id)
         article = db.query(sql)[0]
 
-        article["read_count"], article["like_count"] = \
-            get_article_statistics(db, article_id)
+        # article["read_count"], article["comment_count"] = \
+        #     get_article_statistics(db, article_id)
         article["url"] = urllib.quote(article["url"])
+
+        # Update article read count
+        now = datetime.datetime.now()
+        sql = """INSERT INTO article_reads (`article_id`, `user_id`, `time`)
+                 VALUES ('{0}', '{1}', '{2}')
+              """.format(article_id, 0, now)
+        db.execute(sql)
 
         kwargs = dict(article=article,
                       day=article["day"])
@@ -130,12 +139,16 @@ class ArticleDetailsHandler(BaseHandler):
 
 
 def get_article_statistics(db_conn, article_id):
-    sql = """SELECT COUNT(*) FROM article_likes WHERE article_id='{0}'
-          """.format(article_id)
-    like_count = db_conn.query(sql)[0]["COUNT(*)"]
+    # sql = """SELECT COUNT(*) FROM article_likes WHERE article_id='{0}'
+    #       """.format(article_id)
+    # like_count = db_conn.query(sql)[0]["COUNT(*)"]
 
     sql = """SELECT COUNT(*) FROM article_reads WHERE article_id='{0}'
           """.format(article_id)
     read_count = db_conn.query(sql)[0]["COUNT(*)"]
 
-    return (read_count, like_count)
+    sql = """SELECT COUNT(*) FROM article_comment WHERE article_id='{0}'
+          """.format(article_id)
+    comment_count = db_conn.query(sql)[0]["COUNT(*)"]
+
+    return (read_count, comment_count)

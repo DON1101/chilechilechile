@@ -2,6 +2,7 @@ from tornado.web import RedirectHandler, StaticFileHandler
 from handlers.web.article import ArticleListHandler, ArticleDetailsHandler
 from handlers.weixin import WeixinHandler
 from handlers.web.proxy import ProxyHandler
+from handlers.web.image_proxy import ImageProxyHandler
 from handlers.web.simple_template import SimpleTemplateHandler
 from handlers.web.api.article import RestfulArticleListHandler
 from handlers.web.api.comment import RestfulCommentsHandler
@@ -33,6 +34,7 @@ url_patterns = [
 
     # Proxy url visitor
     (r"/proxy/?$", ProxyHandler),
+    (r"/image-proxy/?$", ImageProxyHandler),
 
     # RESTful API
     (r"/api/articles/list/?$", RestfulArticleListHandler),

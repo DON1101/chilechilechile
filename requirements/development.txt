@@ -2,3 +2,5 @@ tornado
 torndb
 mysql-python
 lxml
+pytz
+tzlocal

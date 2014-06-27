@@ -1,6 +1,6 @@
 <h1 class="app-name">评论</h1>
 
-<div class="scrollable sidebar-scrollable" ng-controller="CommentCtrl">
+<div ng-controller="CommentCtrl" class="scrollable sidebar-scrollable">
   <div class="scrollable-content">
     <div class="list-group" bubble target="rightSidebar">
 
@@ -18,7 +18,7 @@
                 bs-form-control
                 type="text" 
                 ng-model="my_comment.user_email"
-                label="我的邮箱" 
+                label="我的邮箱(不会被公开)" 
                 label-class="col-sm-2 col-lg-1" 
                 class="col-xs-9 col-sm-10 col-lg-11"
                 placeholder="如果愿意留下您的邮箱地址"
