@@ -82,18 +82,18 @@ angularModule
     }
 
     $scope.loadNextPage = function(){
-        console.log("loading...");
         if($scope.next_page < $scope.max_page){
             $scope.getArticles($scope.day,
                                $scope.next_page);
-            $scope.next_page++;
         }
     }
 
     $scope.getArticles = function(day, page){
         var response_promise = $http.get("/api/articles/list/?day=" + day + "&page=" + page);
         response_promise.success(function(data, status, headers, config){
+            console.log(data);
             $scope.articles = $scope.articles.concat(data["articles"]);
+            $scope.next_page++;
         });
         response_promise.error(function(data, status, headers, config){
             console.log(data);
@@ -114,7 +114,9 @@ angularModule
             "args": {"article_id": article_id}
         };
 
-        $rootScope.$broadcast("comments_init", angular.toJson(params));
+        comment_init_interv = setInterval(function(){
+            $rootScope.$broadcast("comments_init", angular.toJson(params));
+        }, 500);
     };
 
 })
@@ -162,10 +164,11 @@ angularModule
         });
     };
 
-    $scope.$on('comments_init', function(event, msg) {
+    $scope.$on("comments_init", function(event, msg) {
+        clearInterval(comment_init_interv);
         args = angular.fromJson(msg)["args"];
         article_id = args["article_id"];
-        $scope.init(article_id)
+        $scope.init(article_id);
     });
 })
 ;
@@ -175,4 +178,20 @@ function use_image_proxy(){
     $("img").each(function(){
         $(this).src = "/image-proxy/?url=" + $(this).src;
     });
+}
+
+var comment_init_interv;
+
+MESSAGES_QUEUE = [];
+function broadcast_message(message){
+    MESSAGES_QUEUE.push(message);
+}
+function pick_message(message){
+    for(var i = 0; i < MESSAGES_QUEUE.length; i++){
+        if(MESSAGES_QUEUE[i] == message){
+            MESSAGES_QUEUE = MESSAGES_QUEUE.splice(i, 1);
+            return true;
+        }
+    }
+    return false;
 }

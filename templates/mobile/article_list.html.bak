@@ -1,0 +1,27 @@
+<div ng-controller="ArticleListCtrl" class="full-height" id="" ng-init="init('{{ day }}', {{ max_page }})" infinite-scroll="loadNextPage()">
+  <div class="scrollable">
+    <div class="scrollable-content">
+      <div class="list-group">
+        {% for article in articles %}
+            <div class="article list-group-item" ng-click="go('/article_details/{{ article["id"] }}')">
+                <div class="title">{{ article["title"] }}</div>
+                <div class="picture">
+                    <img class="lazy" src="{{ article["picUrl"] }}" />
+                </div>
+                <div class="profile">{{ article["profile"] }}</div>
+                <div class="info">
+                    <div class="author">作者：{{ article["author"] }}</div>
+                    <div class="date">{{ article["time"].strftime("%Y-%m-%d") }}</div>
+                </div>
+                <div class="stat">
+                    <div class="like_info">评论 <strong>{{ article["comment_count"] }}</strong></div>
+                    <div class="read_info">浏览 <strong>{{ article["read_count"] }}</strong></div>
+                </div>
+                <div style="clear:both;"></div>
+            
+            </div>
+        {% end %}
+      </div>
+    </div>
+  </div>
+</div>

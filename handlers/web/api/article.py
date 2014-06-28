@@ -2,6 +2,7 @@ import math
 from torndb import Connection
 import settings
 import logging
+import urllib
 logger = logging.getLogger("chilechilechile." + __name__)
 
 from handlers.base_api import ApiBaseHandler
@@ -39,9 +40,12 @@ class RestfulArticleListHandler(ApiBaseHandler):
         articles = db.query(sql)
 
         for art in articles:
-            art["read_count"], art["like_count"] = \
+            art["read_count"], art["comment_count"] = \
                 get_article_statistics(db, art["id"])
             art["time"] = art["time"].strftime("%Y-%m-%d")
+            art["picUrl"] = "/image-proxy/?url={0}".format(
+                urllib.quote(art["picUrl"])
+            )
 
         kwargs = dict(articles=articles,
                       day=day,
@@ -52,12 +56,12 @@ class RestfulArticleListHandler(ApiBaseHandler):
 
 
 def get_article_statistics(db_conn, article_id):
-    sql = """SELECT COUNT(*) FROM article_likes WHERE article_id='{0}'
+    sql = """SELECT COUNT(*) FROM article_comment WHERE article_id='{0}'
           """.format(article_id)
-    like_count = db_conn.query(sql)[0]["COUNT(*)"]
+    comment_count = db_conn.query(sql)[0]["COUNT(*)"]
 
     sql = """SELECT COUNT(*) FROM article_reads WHERE article_id='{0}'
           """.format(article_id)
     read_count = db_conn.query(sql)[0]["COUNT(*)"]
 
-    return (read_count, like_count)
+    return (read_count, comment_count)
