@@ -41,8 +41,16 @@ angular.module("chilechilechile", [
 ;
 
 angularModule
-.controller("MainCtrl", function($scope, $location, $http, $window) {
+.controller("MainCtrl", function($rootScope, $scope, $location, $http, $window) {
     $scope.cur_ctrl = "";
+
+    $rootScope.$on("$routeChangeStart", function(){
+      $rootScope.loading = true;
+    });
+
+    $rootScope.$on("$routeChangeSuccess", function(){
+      $rootScope.loading = false;
+    });
 
     $scope.go = function(path) {
       $location.path(path);
@@ -90,7 +98,6 @@ angularModule
     $scope.getArticles = function(day, page){
         var response_promise = $http.get("/api/articles/list/?day=" + day + "&query=" + $scope.query + "&page=" + page);
         response_promise.success(function(data, status, headers, config){
-            console.log(data);
             $scope.articles = $scope.articles.concat(data["articles"]);
             $scope.next_page++;
             $scope.more_pages = $scope.next_page < $scope.max_page;
