@@ -19,9 +19,9 @@ angular.module("chilechilechile", [
          controller: "MainCtrl"
         });
     $routeProvider.when(
-        '/article_search/:query',
+        '/article_search/:query/:page',
         {templateUrl:
-            function(params){ return '/articles/list/?query=' + params.query;},
+            function(params){ return '/articles/list/?query=' + params.query + '&page=' + params.page;},
          controller: "MainCtrl"
         });
     $routeProvider.when(
@@ -63,9 +63,6 @@ angularModule
 
 })
 .controller("ArticleListCtrl", function($rootScope, $scope, $location, $http) {
-    $scope.day = 0;
-    $scope.max_page = 0;
-    $scope.next_page = 0;
     $scope.articles = [];
 
     $rootScope.$broadcast(
@@ -73,10 +70,12 @@ angularModule
         {"controller": "article_list"}
     );
 
-    $scope.init = function(day, max_page){
+    $scope.init = function(day, query, max_page){
         $scope.day = day;
+        $scope.query = query;
         $scope.max_page = max_page;
         $scope.next_page = 0;
+        $scope.more_pages = max_page > 1;
 
         $scope.getArticles($scope.day, 0);
     }
@@ -89,11 +88,12 @@ angularModule
     }
 
     $scope.getArticles = function(day, page){
-        var response_promise = $http.get("/api/articles/list/?day=" + day + "&page=" + page);
+        var response_promise = $http.get("/api/articles/list/?day=" + day + "&query=" + $scope.query + "&page=" + page);
         response_promise.success(function(data, status, headers, config){
             console.log(data);
             $scope.articles = $scope.articles.concat(data["articles"]);
             $scope.next_page++;
+            $scope.more_pages = $scope.next_page < $scope.max_page;
         });
         response_promise.error(function(data, status, headers, config){
             console.log(data);

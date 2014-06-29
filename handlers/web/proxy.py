@@ -20,10 +20,18 @@ class ProxyHandler(BaseHandler):
             "document.domain = \"qq.com\"",
             "document.domain = \"{0}\"".format(settings.SITE_DOMAIN),
         )
+        body += """
+            <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+            <script type="text/javascript">
+            $("img").each(function(){
+                $(this).attr("src", "/image-proxy/?url=" + $(this).attr("src"));
+            });
+            $(".inner_pc_code").remove();
+            </script>
+        """
 
         kwargs = dict(body_html=body)
         super(ProxyHandler, self).render(
             "proxy/article_content.html",
             **kwargs
         )
-

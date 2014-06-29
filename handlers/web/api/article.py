@@ -28,7 +28,8 @@ class RestfulArticleListHandler(ApiBaseHandler):
             condition = """WHERE UPPER(title) LIKE '%%{0}%%'
                            OR UPPER(profile) LIKE '%%{0}%%'
                            OR UPPER(author) LIKE '%%{0}%%'
-                        """.format(query)
+                           OR UPPER(content) LIKE '%%{0}%%'
+                        """.format(query.upper())
 
         sql = "SELECT COUNT(*) FROM articles {0}".format(condition)
         count = db.query(sql)[0]["COUNT(*)"]

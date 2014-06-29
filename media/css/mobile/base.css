@@ -123,9 +123,8 @@ body, .app{
     margin-top: 5px;
 }
 
-.paging a{
-    color: white;
-    text-decoration: none;
+.more-pages:hover{
+    /*background-color: rgb(179, 179, 179);*/
 }
 
 /* --------------------------------

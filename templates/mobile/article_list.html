@@ -1,4 +1,4 @@
-<div ng-controller="ArticleListCtrl" class="full-height" id="" ng-init="init('{{ day }}', {{ max_page }})">
+<div ng-controller="ArticleListCtrl" class="full-height" id="" ng-init="init('{{ day }}', '{{ query }}', {{ max_page }})">
   <div class="scrollable">
     <div class="scrollable-content">
         <div class="list-group">
@@ -18,7 +18,7 @@
                 </div>
                 <div style="clear:both;"></div>
             </div>
-            <div class="x-center full-width clickable" ng-click="loadNextPage()">点我看下一页</div>
+            <div class="more-pages list-group-item x-center clickable" ng-show="more_pages" ng-click="loadNextPage()">点我看更多</div>
         </div>
     </div>
   </div>
