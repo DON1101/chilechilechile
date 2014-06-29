@@ -38,10 +38,10 @@ class WeixinHandler(RequestHandler):
         response = ""
 
         if content.isdigit():
-            day = int(content)
+            category = int(content)
             # Handle Monday ~ Friday filtering
-            if day >= 1 and day <= 5:
-                category = settings.ARTICLE_CATEGORIES[day - 1]
+            if category >= 1 and category <= 5:
+                category = settings.ARTICLE_CATEGORIES[category - 1]
                 response = self.make_single_pic_response(
                     from_user,
                     to_user,

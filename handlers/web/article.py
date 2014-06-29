@@ -2,7 +2,6 @@ import datetime
 import math
 import urllib
 from torndb import Connection
-from tornado import gen
 import settings
 import logging
 logger = logging.getLogger("chilechilechile." + __name__)
@@ -14,7 +13,7 @@ class ArticleListHandler(BaseHandler):
     def get(self):
         # template_name = "article_list.html"
         template_name = "mobile/article_list.html"
-        day = self.get_argument("day", "all")
+        category = self.get_argument("category", "all")
         cur_page = self.get_argument("page", "0")
         query = self.get_argument("query", "")
         num_per_page = 5
@@ -25,8 +24,8 @@ class ArticleListHandler(BaseHandler):
                         settings.DATABASE_PASSWORD,
                         )
 
-        condition = "WHERE day='{0}'".format(day)
-        if day == "all":
+        condition = "WHERE category='{0}'".format(category)
+        if category == "all":
             condition = ""
         if query:
             condition = """WHERE UPPER(title) LIKE '%%{0}%%'
@@ -53,7 +52,7 @@ class ArticleListHandler(BaseHandler):
 
         kwargs = dict(
             # articles=articles,
-            day=day,
+            category=category,
             query=query,
             cur_page=int(cur_page),
             max_page=max_page)

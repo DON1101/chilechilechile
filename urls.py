@@ -31,6 +31,9 @@ url_patterns = [
     (r"/m/right-sidebar/?$", SimpleTemplateHandler,
      dict(template="mobile/right_sidebar.html")
      ),
+    (r"/m/info/?$", SimpleTemplateHandler,
+     dict(template="mobile/info.html")
+     ),
 
     # Proxy url visitor
     (r"/proxy/?$", ProxyHandler),

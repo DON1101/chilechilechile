@@ -25,15 +25,21 @@ angular.module("chilechilechile", [
          controller: "MainCtrl"
         });
     $routeProvider.when(
-        '/article_list/:day/:page',
+        '/article_list/:category/:page',
         {templateUrl:
-            function(params){ return '/articles/list/?day=' + params.day + '&page=' + params.page;},
+            function(params){ return '/articles/list/?category=' + params.category + '&page=' + params.page;},
          controller: "MainCtrl"
         });
     $routeProvider.when(
         '/article_details/:article_id',
         {templateUrl:
             function(params){ return '/articles/details/' + params.article_id;},
+         controller: "MainCtrl"
+        }
+    );
+    $routeProvider.when(
+        '/info',
+        {templateUrl: "/m/info",
          controller: "MainCtrl"
         }
     );
@@ -78,25 +84,25 @@ angularModule
         {"controller": "article_list"}
     );
 
-    $scope.init = function(day, query, max_page){
-        $scope.day = day;
+    $scope.init = function(category, query, max_page){
+        $scope.category = category;
         $scope.query = query;
         $scope.max_page = max_page;
         $scope.next_page = 0;
         $scope.more_pages = max_page > 1;
 
-        $scope.getArticles($scope.day, 0);
+        $scope.getArticles($scope.category, 0);
     }
 
     $scope.loadNextPage = function(){
         if($scope.next_page < $scope.max_page){
-            $scope.getArticles($scope.day,
+            $scope.getArticles($scope.category,
                                $scope.next_page);
         }
     }
 
-    $scope.getArticles = function(day, page){
-        var response_promise = $http.get("/api/articles/list/?day=" + day + "&query=" + $scope.query + "&page=" + page);
+    $scope.getArticles = function(category, page){
+        var response_promise = $http.get("/api/articles/list/?category=" + category + "&query=" + $scope.query + "&page=" + page);
         response_promise.success(function(data, status, headers, config){
             $scope.articles = $scope.articles.concat(data["articles"]);
             $scope.next_page++;

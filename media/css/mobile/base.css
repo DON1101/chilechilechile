@@ -2,6 +2,18 @@ body, .app{
     background-color: #f7f7f7;
 }
 
+.bubble { 
+    position: absolute;
+    display: table;
+    padding: 10px;
+}
+
+.bubble .content {
+    display: table-cell; 
+    vertical-align: middle; 
+    text-align: center; 
+}
+
 /* ---------------------------
     START: Custom vendor css;
     ------------------------ */
@@ -179,4 +191,23 @@ body, .app{
 
 .comment-content{
     font-size: 1.5em;
+}
+
+/* ---------------------
+    START: Weixin Info;
+    ------------------ */
+
+.weixin-info{
+    padding: 10px;
+}
+img.img-qr{
+    width: 180px;
+}
+.category, .email{
+    font-weight: bold;
+    color: rgb(79, 129, 189);
+}
+.account{
+    font-weight: bold;
+    color: red;
 }

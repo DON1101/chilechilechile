@@ -10,7 +10,7 @@ from handlers.base_api import ApiBaseHandler
 
 class RestfulArticleListHandler(ApiBaseHandler):
     def get(self):
-        day = self.get_argument("day", "all")
+        category = self.get_argument("category", "all")
         cur_page = self.get_argument("page", "0")
         query = self.get_argument("query", "")
         num_per_page = 5
@@ -21,8 +21,8 @@ class RestfulArticleListHandler(ApiBaseHandler):
                         settings.DATABASE_PASSWORD,
                         )
 
-        condition = "WHERE day='{0}'".format(day)
-        if day == "all":
+        condition = "WHERE category='{0}'".format(category)
+        if category == "all":
             condition = ""
         if query:
             condition = """WHERE UPPER(title) LIKE '%%{0}%%'
@@ -49,7 +49,7 @@ class RestfulArticleListHandler(ApiBaseHandler):
             )
 
         kwargs = dict(articles=articles,
-                      day=day,
+                      category=category,
                       cur_page=int(cur_page),
                       max_page=max_page)
 
