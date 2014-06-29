@@ -128,7 +128,7 @@ ARTICLE_CATEGORIES = [
         "article_url": SITE_HTTP_URL + "/m#/article_list/0/0",
     },
     {
-        "title": "精神食粮（已暂停）",
+        "title": "精神食粮（暂停更新）",
         "description": "当浮躁成为社会的常态，什么样的精神食粮，最能安抚你的内心？一段散步，一次KTV，一本好书，一张唱片，一次长跑，一部电影……",
         "pic_url": "http://mmsns.qpic.cn/mmsns/8gATibUoyKqhz5jXSu6H4alwA9ic4V5XibzOmwicicYLIBhCQdEaS3fIwFw/0",
         "article_url": SITE_HTTP_URL + "/m#/article_list/1/0",
@@ -146,7 +146,7 @@ ARTICLE_CATEGORIES = [
         "article_url": SITE_HTTP_URL + "/m#/article_list/3/0",
     },
     {
-        "title": "话题探讨（已暂停）",
+        "title": "话题探讨（暂停更新）",
         "description": "“吃”是一个十分容易拉近关系的话题！素材收集，什么样的饮食话题你最关注，请告诉微君。",
         "pic_url": "http://mmsns.qpic.cn/mmsns/8gATibUoyKqjdnsNfHvSM44u0rQaypGib6tRPTH6Fk85c8xfaNduEQGQ/0",
         "article_url": SITE_HTTP_URL + "/m#/article_list/4/0",
