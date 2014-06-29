@@ -49,11 +49,17 @@ def classify(article):
             "Thu": "sifang",
             "Fri": "huati",
         }
-        sql = "UPDATE articles SET category=%s WHERE id=%s"
-        category = settings.ARTICLE_CATEGORY_CODES[
-            categories[article["day"]]
-        ]
-        db.execute(sql, category, article["id"])
-        print "Updated article {0} successfully.".format(
-            article["id"]
-        )
+    else:
+        categories = {
+            "Tue": "shiji",
+            "Thu": "nannv",
+            "Sat": "sifang",
+        }
+    sql = "UPDATE articles SET category=%s WHERE id=%s"
+    category = settings.ARTICLE_CATEGORY_CODES[
+        categories[article["day"]]
+    ]
+    db.execute(sql, category, article["id"])
+    print "Updated article {0} successfully.".format(
+        article["id"]
+    )
