@@ -204,7 +204,7 @@ body, .app{
 img.img-qr{
     width: 180px;
 }
-.category, .email{
+.category, .email, .keyword{
     font-weight: bold;
     color: rgb(79, 129, 189);
 }
