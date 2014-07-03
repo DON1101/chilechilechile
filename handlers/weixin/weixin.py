@@ -53,7 +53,7 @@ class WeixinHandler(RequestHandler):
                     category["pic_url"],
                     category["article_url"],
                 )
-        elif content == "最新":
+        elif content == u"最新":
             response = self.get_latest_article(
                 from_user,
                 to_user,
@@ -99,9 +99,9 @@ class WeixinHandler(RequestHandler):
             to_user,
             timestamp,
             article["title"],
-            article["description"],
-            article["pic_url"],
-            article["article_url"],
+            article["profile"],
+            article["picUrl"],
+            article["url"],
         )
 
     def make_text_response(self, from_user, to_user, timestamp, content):
