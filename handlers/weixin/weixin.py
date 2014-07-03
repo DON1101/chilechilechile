@@ -101,7 +101,10 @@ class WeixinHandler(RequestHandler):
             article["title"],
             article["profile"],
             article["picUrl"],
-            article["url"],
+            "{0}/articles/details/{1}/".format(
+                settings.SITE_HTTP_URL,
+                article["id"]
+            )
         )
 
     def make_text_response(self, from_user, to_user, timestamp, content):
