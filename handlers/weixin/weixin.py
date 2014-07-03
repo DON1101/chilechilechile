@@ -1,4 +1,5 @@
 from tornado.web import RequestHandler
+from torndb import Connection
 from lxml import etree
 import settings
 import hashlib
@@ -51,6 +52,12 @@ class WeixinHandler(RequestHandler):
                     category["pic_url"],
                     category["article_url"],
                 )
+        elif content == "最新":
+            response = self.get_latest_article(
+                from_user,
+                to_user,
+                int(time.time())
+            )
         else:
             # Handle other filtering
             response = self.make_filtering_response(
@@ -77,6 +84,24 @@ class WeixinHandler(RequestHandler):
                     filter_item["pic_url"],
                     filter_item["article_url"],
                 )
+
+    def get_latest_article(self, from_user, to_user, timestamp):
+        db = Connection(settings.DATABASE_SERVER,
+                        settings.DATABASE_NAME,
+                        settings.DATABASE_USER,
+                        settings.DATABASE_PASSWORD,
+                        )
+        sql = "SELECT * FROM articles ORDER BY time DESC LIMIT 1"
+        article = db.query(sql)[0]
+        return self.make_single_pic_response(
+            from_user,
+            to_user,
+            timestamp,
+            article["title"],
+            article["description"],
+            article["pic_url"],
+            article["article_url"],
+        )
 
     def make_text_response(self, from_user, to_user, timestamp, content):
         template = ("<xml>" +

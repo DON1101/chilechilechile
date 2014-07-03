@@ -184,6 +184,12 @@ angularModule
         $scope.init(article_id);
     });
 })
+.controller("InfoCtrl", function($rootScope, $scope) {
+    $rootScope.$broadcast(
+        "controller_changed",
+        {"controller": "info"}
+    );
+})
 ;
 
 

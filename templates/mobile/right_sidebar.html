@@ -29,7 +29,7 @@
       </div>
 
       <div ng-repeat="comment in comments" class="list-group-item">
-          <div class="comment-user">{[{ comment.user_name }]} </div>
+          <div class="comment-user">{[{ comment.user_name }]} &nbsp;&nbsp;{[{ $index + 1 }]}楼</div>
           <div class="comment-time">{[{ comment.time }]}</div>
           <div class="comment-content">{[{ comment.content }]}</div>
       </div>

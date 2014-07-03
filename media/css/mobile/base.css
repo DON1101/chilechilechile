@@ -156,8 +156,9 @@ body, .app{
     margin-top: 5px;
 }
 
-.more-pages:hover{
-    /*background-color: rgb(179, 179, 179);*/
+.more-pages{
+    height: 60px;
+    line-height: 41px;
 }
 
 /* --------------------------------
