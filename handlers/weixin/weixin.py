@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from tornado.web import RequestHandler
 from torndb import Connection
 from lxml import etree
