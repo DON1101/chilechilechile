@@ -195,6 +195,8 @@ angularModule
 
 function use_image_proxy(){
     $("img").each(function(){
+        if(typeof $(this).src === "undefined" || $(this).src.indexOf("/") == 0)
+            return;
         $(this).src = "/image-proxy/?url=" + $(this).src;
     });
 }
