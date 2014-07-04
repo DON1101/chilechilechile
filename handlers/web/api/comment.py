@@ -19,13 +19,13 @@ class RestfulCommentsHandler(ApiBaseHandler):
 
         condition = "WHERE article_id='{0}'".format(article_id)
 
-        sql = """SELECT * FROM article_comment {0} ORDER BY time DESC
+        sql = """SELECT * FROM article_comment {0} ORDER BY time DESC;
               """.format(condition)
         comments = db.query(sql)
 
         for comment in comments:
             user_id = comment["user_id"]
-            sql = "SELECT * FROM user WHERE id='{0}'".format(user_id)
+            sql = "SELECT * FROM user WHERE id='{0}';".format(user_id)
             user = db.query(sql)[0]
 
             comment["user_name"] = user["name"]
