@@ -21,6 +21,7 @@ class ApiBaseHandler(BaseHandler):
         return response
 
     def render(self, template_name, **kwargs):
+        self.set_header("Cache-control", "no-cache")
         self.write(json_encode(kwargs["kwargs"]))
 
     def check_xsrf_cookie(self):
