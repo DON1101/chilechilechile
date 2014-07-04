@@ -24,7 +24,7 @@ class ProxyHandler(BaseHandler):
             <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
             <script type="text/javascript">
             $("img").each(function(){
-                if(typeof $(this).src === "undefined" || $(this).src.indexOf("/") == 0)
+                if(typeof $(this).attr("src") === "undefined" || $(this).attr("src").indexOf("/") == 0)
                     return;
                 $(this).attr("src", "/image-proxy/?url=" + $(this).attr("src"));
             });
