@@ -1,0 +1,13 @@
+<div ng-controller="CommentListCtrl" class="full-height">
+  <div class="scrollable">
+    <div class="scrollable-content">
+        <h1>一共有 {[{ comments.length }]} 条未读留言</h2>
+        <div class="list-group">
+            <div ng-repeat="comment in comments" class="list-group-item">
+                <div class="user">{[{ comment.user_name }]}</div>
+                <div class="time">{[{ comment.time }]}</div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>

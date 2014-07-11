@@ -6,6 +6,7 @@ from handlers.web.image_proxy import ImageProxyHandler
 from handlers.web.simple_template import SimpleTemplateHandler
 from handlers.web.api.article import RestfulArticleListHandler
 from handlers.web.api.comment import RestfulCommentsHandler
+from handlers.admin.api.comment import AdminCommentListHandler
 
 url_patterns = [
     # Favicon
@@ -19,6 +20,14 @@ url_patterns = [
     (r"/articles/details/(?P<article_id>\w+)/?$", ArticleDetailsHandler),
     (r"/articles/upload/?$", SimpleTemplateHandler,
      dict(template="article_upload.html")
+     ),
+
+    # Admin Used
+    (r"/admin/?$", SimpleTemplateHandler,
+     dict(template="admin/index.html")
+     ),
+    (r"/admin/comments/all/?$", SimpleTemplateHandler,
+     dict(template="admin/comments_list.html")
      ),
 
     # Website Mobile Phone
@@ -42,6 +51,7 @@ url_patterns = [
     # RESTful API
     (r"/api/articles/list/?$", RestfulArticleListHandler),
     (r"/api/articles/comments/(?P<article_id>\w+)/?$", RestfulCommentsHandler),
+    (r"/api/admin/comments/all/?$", AdminCommentListHandler),
 
     (r"/", RedirectHandler, {"url": "/articles/list/"}),
 ]
