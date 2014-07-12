@@ -93,7 +93,7 @@ class WeixinHandler(RequestHandler):
                         from_user,
                         to_user,
                         timestamp,
-                        filter["content"],
+                        filter_item["content"],
                     )
 
     def get_latest_article(self, from_user, to_user, timestamp):
