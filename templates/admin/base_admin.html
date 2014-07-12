@@ -23,6 +23,8 @@
     {% block right_sidebar %}
     {% end %}
 
+    {% include "snippets/_hidden_args.html"  %}
+
     <div class="app">
         <div class="app-body" ng-class="{loading: loading}">
             <div ng-show="loading" class="app-content-loading">

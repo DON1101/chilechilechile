@@ -12,4 +12,5 @@ class SimpleTemplateHandler(BaseHandler):
         self.template = template
 
     def get(self):
-        self.render(self.template)
+        args = self.request.arguments
+        self.render(self.template, query_string=args)

@@ -3,11 +3,13 @@ import settings
 import logging
 logger = logging.getLogger("chilechilechile." + __name__)
 
+from handlers.admin.api.decorators import admin_required
 from handlers.base_api import ApiBaseHandler
 from utils.lib import convert_to_time_zone
 
 
 class AdminCommentListHandler(ApiBaseHandler):
+    @admin_required
     def get(self):
 
         db = Connection(settings.DATABASE_SERVER,
@@ -19,7 +21,9 @@ class AdminCommentListHandler(ApiBaseHandler):
         condition = """WHERE target_user_id='1' and consumed='0'
                         and article_comment.user_id=user.id"""
 
-        sql = """SELECT *,name as user_name,time FROM article_comment,user {0}
+        sql = """SELECT user_id, name as user_name, content,
+                        email, time, article_id
+                 FROM article_comment,user {0}
                  ORDER BY time DESC;""".format(condition)
         comments = db.query(sql)
 

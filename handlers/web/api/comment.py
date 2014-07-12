@@ -17,18 +17,14 @@ class RestfulCommentsHandler(ApiBaseHandler):
                         settings.DATABASE_PASSWORD,
                         )
 
-        condition = "WHERE article_id='{0}'".format(article_id)
-
-        sql = """SELECT * FROM article_comment {0} ORDER BY time DESC;
-              """.format(condition)
+        sql = """SELECT content, time, name as user_name
+                 FROM article_comment, user
+                 WHERE article_comment.user_id=user.id
+                 ORDER BY time;
+              """
         comments = db.query(sql)
 
         for comment in comments:
-            user_id = comment["user_id"]
-            sql = "SELECT * FROM user WHERE id='{0}';".format(user_id)
-            user = db.query(sql)[0]
-
-            comment["user_name"] = user["name"]
             comment["time"] = convert_to_time_zone(comment["time"],
                                                    "Asia/Shanghai")
             comment["time"] = comment["time"].strftime("%Y-%m-%d %H:%M:%S")

@@ -65,7 +65,8 @@ angularModule
     );
 
     $scope.getComments = function(){
-        var response_promise = $http.get("/api/admin/comments/all/");
+        var token = $(".query-string-param[key='token']").attr("value");
+        var response_promise = $http.get("/api/admin/comments/all/?token=" + token);
         response_promise.success(function(data, status, headers, config){
             $scope.comments = data["comments"];
         });

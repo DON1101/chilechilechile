@@ -1,0 +1,5 @@
+<!-- START: This is for query string parameters along with URL -->
+{% for key, value in  query_string.iteritems() %}
+  <div class="hidden query-string-param" key="{{ key }}" value="{{ value[0] }}"></div>
+{% end %}
+<!-- END: This is for query string parameters along with URL -->

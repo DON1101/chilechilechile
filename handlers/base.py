@@ -15,9 +15,12 @@ class BaseHandler(tornado.web.RequestHandler):
     """
 
     def get_argument(self, name, default=[], strip=True):
-        return super(BaseHandler, self).get_argument(
+        argument = super(BaseHandler, self).get_argument(
             name, default, strip
-        ).encode("utf8")
+        )
+        if argument:
+            argument = argument.encode("utf8")
+        return argument
 
     def render(self, template_name, **kwargs):
         site_meta_data = site_metadata()

@@ -76,15 +76,23 @@ class WeixinHandler(RequestHandler):
 
         for filter_item in article_filtering.ARTICLE_FILTERING:
             if content in filter_item["keys"]:
-                return self.make_single_pic_response(
-                    from_user,
-                    to_user,
-                    timestamp,
-                    filter_item["title"],
-                    filter_item["description"],
-                    filter_item["pic_url"],
-                    filter_item["article_url"],
-                )
+                if filter_item["msg_type"] == "news":
+                    return self.make_single_pic_response(
+                        from_user,
+                        to_user,
+                        timestamp,
+                        filter_item["title"],
+                        filter_item["description"],
+                        filter_item["pic_url"],
+                        filter_item["article_url"],
+                    )
+                elif filter_item["msg_type"] == "text":
+                    return self.make_text_response(
+                        from_user,
+                        to_user,
+                        timestamp,
+                        filter["content"],
+                    )
 
     def get_latest_article(self, from_user, to_user, timestamp):
         db = Connection(settings.DATABASE_SERVER,
