@@ -6,6 +6,9 @@ import settings
 import hashlib
 import time
 import logging
+from handlers.weixin import article_filtering
+
+
 logger = logging.getLogger("chilechilechile." + __name__)
 
 
@@ -72,7 +75,6 @@ class WeixinHandler(RequestHandler):
         self.flush()
 
     def make_filtering_response(self, from_user, to_user, timestamp, content):
-        import article_filtering
 
         for filter_item in article_filtering.ARTICLE_FILTERING:
             if content in filter_item["keys"]:
