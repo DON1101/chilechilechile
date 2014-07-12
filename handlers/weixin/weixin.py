@@ -109,7 +109,7 @@ class WeixinHandler(RequestHandler):
             article["title"],
             article["profile"],
             article["picUrl"],
-            "{0}/articles/details/{1}/".format(
+            "{0}/m#/article_details/{1}".format(
                 settings.SITE_HTTP_URL,
                 article["id"]
             )
