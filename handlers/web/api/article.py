@@ -35,14 +35,23 @@ class RestfulArticleListHandler(ApiBaseHandler):
         count = db.query(sql)[0]["COUNT(*)"]
         max_page = int(math.ceil((count + 0.0) / num_per_page))
 
-        sql = """SELECT * FROM articles {0} ORDER BY time DESC
-                 LIMIT {1}, {2}
+        sql = """SELECT articles.id AS id, title, profile, author, url, picUrl,
+                        articles.time AS time,
+                        (SELECT COUNT(*) FROM article_reads
+                         WHERE article_reads.article_id=articles.id) AS read_count,
+                        (SELECT COUNT(*) FROM article_comment
+                         WHERE article_comment.article_id=articles.id) AS comment_count
+                 FROM articles
+                 {0}
+                 ORDER BY articles.time DESC
+                 LIMIT {1}, {2};
               """.format(condition, int(cur_page) * num_per_page, num_per_page)
+        print sql
         articles = db.query(sql)
 
         for art in articles:
-            art["read_count"], art["comment_count"] = \
-                get_article_statistics(db, art["id"])
+            # art["read_count"], art["comment_count"] = \
+            #     get_article_statistics(db, art["id"])
             art["time"] = art["time"].strftime("%Y-%m-%d")
             art["picUrl"] = "/image-proxy/?url={0}".format(
                 urllib.quote(art["picUrl"])
