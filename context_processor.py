@@ -9,5 +9,6 @@ def site_metadata():
 
     site_metadata = dict(
         SITE_NAME=settings.SITE_NAME,
+        SITE_HTTP_URL=settings.SITE_HTTP_URL,
     )
     return site_metadata

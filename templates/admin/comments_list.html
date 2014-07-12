@@ -3,10 +3,14 @@
     <div class="scrollable-content">
         <h1>一共有 {[{ comments.length }]} 条未读留言</h2>
         <div class="list-group">
-            <div ng-repeat="comment in comments" class="list-group-item">
-                <div class="user">{[{ comment.user_name }]}</div>
-                <div class="time">{[{ comment.time }]}</div>
-            </div>
+            <a ng-repeat="comment in comments" href="{{ SITE_HTTP_URL + "/m#/article_details/" }}{[{ comment.article_id }]}" target="_blank" style="color:black;text-decoration:none;">
+                <div class="list-group-item">
+                    <div class="user">{[{ comment.user_name }]}</div>
+                    <div class="time">{[{ comment.time }]}</div>
+                    <div class="article-title">文章题目：{[{ comment.article_title }]}</div>
+                    <div class="content">{[{ comment.content }]}</div>
+                </div>
+            </a>
         </div>
     </div>
   </div>

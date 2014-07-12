@@ -19,12 +19,14 @@ class AdminCommentListHandler(ApiBaseHandler):
                         )
 
         condition = """WHERE target_user_id='1' and consumed='0'
-                        and article_comment.user_id=user.id"""
+                        and article_comment.user_id=user.id
+                        and article_comment.article_id=articles.id"""
 
-        sql = """SELECT user_id, name as user_name, content,
-                        email, time, article_id
-                 FROM article_comment,user {0}
-                 ORDER BY time DESC;""".format(condition)
+        sql = """SELECT user_id, name AS user_name, email, article_id,
+                        article_comment.time AS time, title as article_title,
+                        article_comment.content AS content
+                 FROM article_comment,user,articles {0}
+                 ORDER BY article_comment.time DESC;""".format(condition)
         comments = db.query(sql)
 
         for comment in comments:
