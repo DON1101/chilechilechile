@@ -138,7 +138,7 @@ class WeixinHandler(RequestHandler):
                         )
         # Simple way to avoid SQL insertion attack
         if query.strip() and ";" not in query:
-            condition = """WHERE UPPER(title) LIKE '%%{0}%%'
+            condition = u"""WHERE UPPER(title) LIKE '%%{0}%%'
                            OR UPPER(profile) LIKE '%%{0}%%'
                            OR UPPER(author) LIKE '%%{0}%%'
                            OR UPPER(content) LIKE '%%{0}%%'
