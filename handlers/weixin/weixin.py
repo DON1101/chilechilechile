@@ -39,6 +39,7 @@ class WeixinHandler(RequestHandler):
         content = xml.find("Content").text
         to_user = xml.find("FromUserName").text
         from_user = xml.find("ToUserName").text
+        search_prefix = u"吃"
 
         response = ""
 
@@ -62,6 +63,18 @@ class WeixinHandler(RequestHandler):
                 to_user,
                 int(time.time())
             )
+        elif content.startswith(search_prefix + u"：") or \
+                content.startswith(search_prefix + u":"):
+            # Handle query search
+            if content.startswith(search_prefix + u"："):
+                query = content.replace(search_prefix + u"：", "")
+            elif content.startswith(search_prefix + u":"):
+                query = content.replace(search_prefix + u":", "")
+            response = self.search_for_articles(
+                from_user,
+                to_user,
+                int(time.time()),
+                query)
         else:
             # Handle other filtering
             response = self.make_filtering_response(
@@ -117,6 +130,40 @@ class WeixinHandler(RequestHandler):
             )
         )
 
+    def search_for_articles(self, from_user, to_user, timestamp, query):
+        db = Connection(settings.DATABASE_SERVER,
+                        settings.DATABASE_NAME,
+                        settings.DATABASE_USER,
+                        settings.DATABASE_PASSWORD,
+                        )
+        # Simple way to avoid SQL insertion attack
+        if query.strip() and ";" not in query:
+            condition = """WHERE UPPER(title) LIKE '%%{0}%%'
+                           OR UPPER(profile) LIKE '%%{0}%%'
+                           OR UPPER(author) LIKE '%%{0}%%'
+                           OR UPPER(content) LIKE '%%{0}%%'
+                        """.format(query.strip().upper())
+        else:
+            condition = ""
+        sql = "SELECT * FROM articles {0} ORDER BY time DESC LIMIT 10;".format(
+            condition)
+        articles = db.query(sql)
+        if len(articles) > 0:
+            return self.make_multi_pic_response(
+                from_user,
+                to_user,
+                timestamp,
+                [title for title in articles["title"]],
+                [description for description in articles["description"]],
+                [pic_url for pic_url in articles["pic_url"]],
+                [article_url for article_url in articles["article_url"]])
+        else:
+            return self.make_text_response(
+                from_user,
+                to_user,
+                timestamp,
+                u"还没有关于“%s”的内容哦！你有什么想法呢？告诉微君吧！" % query)
+
     def make_text_response(self, from_user, to_user, timestamp, content):
         template = ("<xml>" +
                     "<ToUserName><![CDATA[%s]]></ToUserName>" +
@@ -164,5 +211,45 @@ class WeixinHandler(RequestHandler):
                                description,
                                pic_url,
                                article_url
+                               )
+        return response
+
+    def make_multi_pic_response(self,
+                                from_user,
+                                to_user,
+                                timestamp,
+                                titles,
+                                descriptions,
+                                pic_urls,
+                                article_urls):
+        items_response = ""
+        for i in range(len(titles)):
+            title = titles[i]
+            description = descriptions[i]
+            pic_url = pic_urls[i]
+            article_url = article_urls[i]
+            items_response += ("<item>"
+                               "   <Title><![CDATA[%s]]></Title>"
+                               "   <Description><![CDATA[%s]]></Description>"
+                               "   <PicUrl><![CDATA[%s]]></PicUrl>"
+                               "   <Url><![CDATA[%s]]></Url>"
+                               "</item>" % (title,
+                                            description,
+                                            pic_url,
+                                            article_url))
+        template = ("<xml>"
+                    "<ToUserName><![CDATA[%s]]></ToUserName>"
+                    "<FromUserName><![CDATA[%s]]></FromUserName>"
+                    "<CreateTime>%s</CreateTime>"
+                    "<MsgType><![CDATA[news]]></MsgType>"
+                    "<ArticleCount>1</ArticleCount>"
+                    "<Articles>"
+                    "%s"
+                    "</Articles>"
+                    "</xml>")
+        response = template % (to_user,
+                               from_user,
+                               timestamp,
+                               items_response
                                )
         return response

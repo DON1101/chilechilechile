@@ -46,7 +46,6 @@ class RestfulArticleListHandler(ApiBaseHandler):
                  ORDER BY articles.time DESC
                  LIMIT {1}, {2};
               """.format(condition, int(cur_page) * num_per_page, num_per_page)
-        print sql
         articles = db.query(sql)
 
         for art in articles:
