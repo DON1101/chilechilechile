@@ -158,9 +158,12 @@ class WeixinHandler(RequestHandler):
                 to_user,
                 timestamp,
                 [article["title"] for article in articles],
-                [article["description"] for article in articles],
-                [article["pic_url"] for article in articles],
-                [article["article_url"] for article in articles])
+                [article["profile"] for article in articles],
+                [article["picUrl"] for article in articles],
+                ["{0}/m#/article_details/{1}".format(
+                    settings.SITE_HTTP_URL,
+                    article["id"]
+                ) for article in articles])
         else:
             return self.make_text_response(
                 from_user,
