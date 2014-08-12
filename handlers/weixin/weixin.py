@@ -149,7 +149,7 @@ class WeixinHandler(RequestHandler):
                         """.format(query.strip().upper())
         else:
             condition = ""
-        sql = "SELECT * FROM articles {0} ORDER BY time DESC LIMIT 10;".format(
+        sql = u"SELECT * FROM articles {0} ORDER BY time DESC LIMIT 10;".format(
             condition)
         articles = db.query(sql)
         if len(articles) > 0:
