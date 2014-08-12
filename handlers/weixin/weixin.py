@@ -6,6 +6,7 @@ import settings
 import hashlib
 import time
 import logging
+import traceback
 from handlers.weixin import article_filtering
 
 
@@ -70,11 +71,14 @@ class WeixinHandler(RequestHandler):
                 query = content.replace(search_prefix + u"：", "")
             elif content.startswith(search_prefix + u":"):
                 query = content.replace(search_prefix + u":", "")
-            response = self.search_for_articles(
-                from_user,
-                to_user,
-                int(time.time()),
-                query)
+            try:
+                response = self.search_for_articles(
+                    from_user,
+                    to_user,
+                    int(time.time()),
+                    query)
+            except:
+                logger.error(traceback.format_exc())
         else:
             # Handle other filtering
             response = self.make_filtering_response(
