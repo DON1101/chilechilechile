@@ -149,7 +149,7 @@ class WeixinHandler(RequestHandler):
                         """.format(query.strip().upper())
         else:
             condition = ""
-        sql = u"SELECT * FROM articles {0} ORDER BY time DESC LIMIT 10;".format(
+        sql = u"SELECT * FROM articles {0} ORDER BY time DESC LIMIT 10".format(
             condition)
         articles = db.query(sql)
         if len(articles) > 0:
@@ -157,10 +157,10 @@ class WeixinHandler(RequestHandler):
                 from_user,
                 to_user,
                 timestamp,
-                [title for title in articles["title"]],
-                [description for description in articles["description"]],
-                [pic_url for pic_url in articles["pic_url"]],
-                [article_url for article_url in articles["article_url"]])
+                [article["title"] for article in articles],
+                [article["description"] for article in articles],
+                [article["pic_url"] for article in articles],
+                [article["article_url"] for article in articles])
         else:
             return self.make_text_response(
                 from_user,
