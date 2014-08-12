@@ -249,7 +249,7 @@ class WeixinHandler(RequestHandler):
                     "<FromUserName><![CDATA[%s]]></FromUserName>"
                     "<CreateTime>%s</CreateTime>"
                     "<MsgType><![CDATA[news]]></MsgType>"
-                    "<ArticleCount>1</ArticleCount>"
+                    "<ArticleCount>%s</ArticleCount>"
                     "<Articles>"
                     "%s"
                     "</Articles>"
@@ -257,6 +257,7 @@ class WeixinHandler(RequestHandler):
         response = template % (to_user,
                                from_user,
                                timestamp,
+                               len(titles),
                                items_response
                                )
         return response
