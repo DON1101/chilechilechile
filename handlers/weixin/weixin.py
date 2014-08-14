@@ -40,7 +40,14 @@ class WeixinHandler(RequestHandler):
         content = xml.find("Content").text
         to_user = xml.find("FromUserName").text
         from_user = xml.find("ToUserName").text
-        search_prefix = u"吃"
+
+        def _get_prefix(content):
+            for prefix in search_prefix_list:
+                if content.startswith(prefix):
+                    return prefix
+            return None
+        search_prefix_list = [u"吃:", u"吃：", u" "]
+        search_prefix = _get_prefix(content)
 
         response = ""
 
@@ -64,13 +71,9 @@ class WeixinHandler(RequestHandler):
                 to_user,
                 int(time.time())
             )
-        elif content.startswith(search_prefix + u"：") or \
-                content.startswith(search_prefix + u":"):
+        elif search_prefix is not None:
             # Handle query search
-            if content.startswith(search_prefix + u"："):
-                query = content.replace(search_prefix + u"：", "")
-            elif content.startswith(search_prefix + u":"):
-                query = content.replace(search_prefix + u":", "")
+            query = content.replace(search_prefix, "")
             try:
                 response = self.search_for_articles(
                     from_user,
