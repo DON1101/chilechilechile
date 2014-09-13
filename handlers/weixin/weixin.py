@@ -37,16 +37,30 @@ class WeixinHandler(RequestHandler):
     def post(self):
         str_xml = self.request.body  # Get Post data
         xml = etree.fromstring(str_xml)  # xml parsing
-        content = xml.find("Content").text
         to_user = xml.find("FromUserName").text
         from_user = xml.find("ToUserName").text
+        msg_type = xml.find("MsgType").text
+
+        if msg_type == "event":
+            event = xml.find("Event").text
+            if event == "subscribe":
+                response = self.make_subscribe_response(
+                    from_user,
+                    to_user,
+                    int(time.time())
+                )
+                self.write(response)
+                self.flush()
+                return
+
+        content = xml.find("Content").text
 
         def _get_prefix(content):
             for prefix in search_prefix_list:
                 if content.startswith(prefix):
                     return prefix
             return None
-        search_prefix_list = [u"吃:", u"吃：", u" "]
+        search_prefix_list = [u" ", u" ", u"\t"]
         search_prefix = _get_prefix(content)
 
         response = ""
@@ -173,6 +187,24 @@ class WeixinHandler(RequestHandler):
                 to_user,
                 timestamp,
                 u"还没有关于“%s”的内容哦！你有什么想法呢？告诉微君吧！" % query)
+
+    def make_subscribe_response(self, from_user, to_user, timestamp):
+        content = u"""
+        【并非关于吃的一切】与吃有关的情，一起来分享。
+        回复数字“1”获取：旅行食记 系列；
+        回复数字“2”获取：精神食粮 系列(已暂停更新)；
+        回复数字“3”获取：吃情男女 系列；
+        回复数字“4”获取：私房推荐 系列；
+        回复数字“5”获取：话题探讨 系列(已暂停更新)；
+        回复 “最新” 获取：最新一期文章；
+        回复 “[空格][关键词]” 获取：搜索相应关键词的文章，比如“ 牛排”。
+        """
+        return self.make_text_response(
+            from_user,
+            to_user,
+            timestamp,
+            content,
+        )
 
     def make_text_response(self, from_user, to_user, timestamp, content):
         template = ("<xml>" +
