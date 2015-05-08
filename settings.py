@@ -59,7 +59,7 @@ SITE_DOMAIN = "127.0.0.1"
 
 DATABASE_SERVER = "localhost"
 DATABASE_USER = "root"
-DATABASE_PASSWORD = "MS@don1988"
+DATABASE_PASSWORD = "password"
 DATABASE_NAME = "chilechilechile"
 
 ##################

@@ -4,3 +4,4 @@ mysql-python
 lxml
 pytz
 tzlocal
+tornado-redis
