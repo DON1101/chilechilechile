@@ -1,7 +1,9 @@
 Basic components in Tornado framework:
 
 - URL Mapping
+  
   All the url mapping settings could be found in /urls.py
+  
   For each url, there's a RequestHandler class specified. RequestHandler is the actual controller.
 
 - RequestHandler
